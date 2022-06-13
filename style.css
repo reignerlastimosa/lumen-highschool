@@ -1,0 +1,127 @@
+*{
+ 
+    margin:0;
+    padding:0;
+    
+}
+
+header{
+    background-color: #D9D9D9;
+    border-bottom: 10px solid #3B778A;
+    height:150px; 
+   
+    
+}
+
+header h2{
+    font-weight: bold;
+    color: #3B778A;
+}
+#header_logo{
+    background-color: #6AB2C9;
+    width:140px;
+    height:120px;
+    border-radius:50%;
+    margin-left:100px;
+    margin-top:10px;
+}
+
+
+#login{
+    margin-top:80px;
+}
+
+#login h1{
+    color:#3B778A;
+    font-weight: bold;
+}
+
+#login form{
+ 
+    height:200px;
+    width:500px;
+}
+
+#login form input[type ="email"]{
+    border-radius: 20px;
+    height:49px;
+    width:231px;
+    border:none;
+    background-color: rgb(218, 218, 218);
+    padding-left:10px;
+
+    
+}
+
+#login form input[type ="password"]{
+    border-radius: 20px;
+    height:49px;
+    width:231px;
+    border:none;
+    background-color: rgb(218, 218, 218);
+    padding-left:10px;
+}
+
+#login-button{
+    background-color: #3B778A;
+    width:150px;
+    height:45px;
+    border-radius: 20px;
+    color:white;
+    border:none;
+}
+
+::placeholder{
+    color:black;
+   
+}
+
+
+
+nav{
+   
+   position:fixed;
+   width:300px;
+   height:100%;
+   background-color: #6AB2C9;
+}
+nav h3{
+    color:white;
+    
+}
+ul{
+    list-style-type: none;
+  
+}
+
+ul li {
+    color:white;
+}
+
+#header{
+    background-color: #3B778A;
+    height:250px;
+}
+
+#header_logo{
+    position:relative;
+
+}
+
+#header_logo img{
+    position:absolute;
+    margin-left:20px;
+    margin-top:10px;
+}
+
+#main{
+    margin-left:300px;
+   
+    
+}
+
+
+
+#announcements{
+    background-color: #D9D9D9;
+}
