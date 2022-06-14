@@ -28,10 +28,59 @@
 
         <div id="lesson_main" class="d-flex align-items-center flex-column">
             <div id="lesson_buttons" class="m-4">
-                <button>Add</button>
-                <button>Edit</button>
+                <button  data-bs-toggle="modal" data-bs-target="#enroll">Add</button>
+                <button  data-bs-toggle="modal" data-bs-target="#enroll">Edit</button>
+
+                
                 
             </div>
+
+            <div class="modal fade" id="enroll">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Enrollment Form</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                      <p class="lead">Fill out this form and we will get back to you</p>
+                      <form method ="POST" action="">
+                          <div class="mb-3">
+                            <label for="first-name" class="col-form-label"> First Name:</label>
+                            <input type="text" class="form-control" id="first-name" name="firstname">
+                            
+                          </div>
+        
+                          <div class="mb-3">
+                            <label for="last-name" class="col-form-label"> First Name:</label>
+                            <input type="text" class="form-control" id="last-name" name="lastname">
+        
+                          </div>
+        
+                          <div class="mb-3">
+                            <label for="email" class="col-form-label"> Email:</label>
+                            <input type="email" class="form-control" id="email" name="email">
+        
+                          </div>
+        
+                          <div class="mb-3">
+                            <label for="phone" class="col-form-label"> Phone:</label>
+                            <input type="tel" class="form-control" id="phone" name="phone">
+        
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            
+                            <input type="submit" name ="submit_button" class="btn btn-primary" value="Add"> 
+                          </div>
+                        </form>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+                </div>
+                
 
             <section class="m-3">
                 <h2 class="m-4">Announcement 1</h2>
