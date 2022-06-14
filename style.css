@@ -279,6 +279,20 @@ ul li {
     border:none;
 }
 
+#edit_profile{
+    background-color: transparent;
+    color:#2A4D58;
+    width:100px;
+    height:40px;
+    
+    
+    border:none;
+}
+
+#edit_profile:hover{
+    text-decoration: underline;
+}
+
 #edit_class:hover{
    font-display: underline;
    text-decoration: underline;
