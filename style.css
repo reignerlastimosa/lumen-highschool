@@ -291,6 +291,7 @@ ul li {
 
 #edit_profile:hover{
     text-decoration: underline;
+    font-weight: bold;
 }
 
 #edit_class:hover{
