@@ -43,7 +43,7 @@ header h2{
     width:500px;
 }
 
-#login form input[type ="email"]{
+#login form input[type ="text"]{
     border-radius: 20px;
     height:49px;
     width:231px;

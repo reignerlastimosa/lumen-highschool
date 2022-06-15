@@ -83,7 +83,7 @@
                 </div>
                 <div class="modal-body">
                   
-                  <form method ="POST" action="">
+                  <form method ="POST" action="/edit_grades">
                       <div class="mb-3">
                         <label for="firstname" class="col-form-label"> First Name</label>
                         <input type="text" class="form-control" id="" name="firstname">
@@ -97,7 +97,7 @@
                       </div>
     
                       <div class="mb-3">
-                        <label for="grades" class="col-form-label"> Grades</label>
+                        <label for="grades" class="col-form-label"> Grade</label>
                         <input type="text" class="form-control" id="" name="grades">
     
                       </div>
@@ -132,23 +132,17 @@
               </tr>
             </thead>
             <tbody>
-             <tr>
-                <td>Juan</td>
-                <td>Dela Cruz</td>
-                <td>3-ISA</td>
-                <td>2022</td>
-                <td>Class 2</td>
-                <td>87</td>
-             </tr>
-
-             <tr>
-                <td>Juan</td>
-                <td>Dela Cruz</td>
-                <td>3-ISB</td>
-                <td>2022</td>
-                <td>Class 2</td>
-                <td>91</td>
-             </tr>
+              <% students.forEach((student) => {
+                %>
+                <tr>
+                  <td> <%= student.firstname %></td>
+                  <td> <%= student.lastname %></td>
+                  <td> <%= student.yearsec %></td>
+                  <td> <%= student.academicyear %></td>
+                  <td> <%= student.class %></td>
+                  <td> <%= student.grade %></td>
+                </tr>
+               <%}) %>
            
               
               

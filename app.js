@@ -71,6 +71,19 @@ app.get("/create-account-table",(req,res)=>{
 });
 
 
+app.get("/create-profile-table",(req,res)=>{
+    let sql="CREATE TABLE profile(id int AUTO_INCREMENT, firstname varchar(50), lastname varchar(50), email varchar(50), birthday datetime, PRIMARY KEY (id))";
+    database.query(sql,(err,result)=>{
+        if(!err){
+            res.send("successfully created profile table");
+        }
+        else{
+            res.send("failed to create profile table");
+        }
+    });
+});
+
+
 app.post('/add-student',(req,res)=>{
     
     var firstname = req.body.firstname;
@@ -97,7 +110,7 @@ app.post('/add-student',(req,res)=>{
 
 
 
-app.post('/login_account',(req,res)=>{
+app.post('/login',(req,res)=>{
     
     var username = req.body.username;
     var password = req.body.password;
@@ -120,6 +133,70 @@ app.post('/login_account',(req,res)=>{
     });
 });
 
+app.post('/edit_grades',(req,res)=>{
+    var firstname = req.body.firstname;
+    var lastname = req.body.lastname;
+    var grades = req.body.grades;
+
+    var sql = `UPDATE student SET grade ="${grades}" where firstname = "${firstname}" AND lastname = "${lastname}"`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            console.log("successfully updated student grade");
+            res.redirect("/grades");
+        }
+        else{
+            throw err;
+        }
+    });
+  
+});
+
+app.post('/edit_profile',(req,res)=>{
+    var firstname = req.body.firstname;
+    var lastname = req.body.lastname;
+    var email = req.body.email;
+    var password = req.body.password;
+    var birthday = req.body.birthday;
+    var id = req.body.id;
+
+
+    var sql = "SELECT * FROM account";
+    database.query(sql,(err,result)=>{
+        if(!err){
+            for(var i =0; i<result.length;i++){
+                if(email == result[i].email && password == result[i].password){
+                    console.log("found an account");
+                    
+                    var sql2 = `UPDATE account SET email = "${email}, password = "${password}"`;
+                    var sql3 = `UPDATE profile SET firstname = "${firstname}", lastname="${lastname}", email = "${email}", password= "${password}", birthday = "${birthday}", id = "${id}"`;
+
+                    database.query(sql2,(err,result)=>{ 
+                        if(!err){   
+                            console.log("updated account table");
+                        }
+                        else{
+                            throw err;
+                        }
+                    });
+
+                    database.query(sql3,(err,result)=>{
+                        if(!err){
+                            console.log("updated profile table");
+                        }
+                        else{
+                            throw err;
+                        }
+                    });
+                }
+                
+            }
+        }
+        else{
+            throw err;
+        }
+    });
+});
+
 
 
 app.get('/', (req,res)=>{
@@ -130,8 +207,23 @@ app.get('/login', (req,res)=>{
     res.render('login');
 });
 
+
 app.get('/index', (req,res)=>{
     res.render('index');
+});
+
+app.get('/grades', (req,res)=>{
+    let sql = "SELECT * FROM student";
+
+    database.query(sql,(err,result)=>{
+        if(!err){
+            res.render('grades', {students:result});
+
+        }
+        else{
+            throw err;
+        }
+    });
 });
 
 app.get('/announcement', (req,res)=>{
