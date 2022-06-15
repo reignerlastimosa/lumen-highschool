@@ -1,0 +1,26 @@
+{
+  "name": "lumen-highschool",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reignerlastimosa/lumen-highschool-academy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/reignerlastimosa/lumen-highschool-academy/issues"
+  },
+  "homepage": "https://github.com/reignerlastimosa/lumen-highschool-academy#readme",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.16"
+  }
+}
