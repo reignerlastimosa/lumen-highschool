@@ -43,7 +43,7 @@ header h2{
     width:500px;
 }
 
-#login form input[type ="text"]{
+#login form input[type ="email"]{
     border-radius: 20px;
     height:49px;
     width:231px;
@@ -99,7 +99,7 @@ nav h3{
 }
 ul{
     list-style-type: none;
-    padding:0;
+    padding:1;
   
 }
 
@@ -380,8 +380,10 @@ li:hover{
    
 }
 
-
-
+.modal-footer{
+    background-color: lightgrey;
+   
+}
 
 
 

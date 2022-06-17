@@ -2,7 +2,7 @@ const express = require('express');
 const database = require('./database');
 
 const app = express();
-const PORT = process.env.PORT || 26;
+const PORT = process.env.PORT || 3000;
 
 
 database.connect((err)=>{
@@ -233,14 +233,37 @@ app.get('/announcement', (req,res)=>{
 app.get('/class', (req,res)=>{
     res.render('class');
 });
-
 app.get('/grades', (req,res)=>{
     res.render('grades');
 });
-
 app.get('/schedule', (req,res)=>{
     res.render('schedule');
 });
+app.get('/studentclass', (req,res)=>{
+    res.render('studentclass');
+});
+app.get('/studentgrades', (req,res)=>{
+    res.render('studentgrades');
+});
+app.get('/studentAnnouncement', (req,res)=>{
+    res.render('studentAnnouncement');
+});
+app.get('/studentLogin', (req,res)=>{
+    res.render('studentLogin');
+});
+app.get('/studentProfile', (req,res)=>{
+    res.render('studentProfile');
+});
+app.get('/studentSchedule', (req,res)=>{
+    res.render('studentSchedule');
+});
+app.get('/studentlesson', (req,res)=>{
+    res.render('studentlesson');
+});
+app.get('/studentAnnouncementLesson', (req,res)=>{
+    res.render('studentAnnouncementLesson');
+});
+
 
 
 app.listen(PORT, ()=>{

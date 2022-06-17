@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style.css">
+  </head>
+    <title>Class</title>
+</head>
+<body>
+    
+
+  <%- include('./main_nav_student.ejs') %>  
+ 
+ 
+  <section id="main">
+    <div id="classes" class="d-flex align-items-center justify-content-around"> 
+   
+    <h1 class="d-flex p-3">Classes</h1>
+   
+
+    <div id="classes_function">   
+        <label for=""> Filter</label>
+    <select  name="filter_class" id="filter_class">
+      
+        <option value="class1">Year-Sec</option>
+        <option value="class2">Year-Sec</option>
+        <option value="class3">Year-Sec</option>
+        <option value="class4">Year-Sec</option>
+      </select>
+    </div>
+  </div>
+    <div id="main_class" class=" container d-flex flex-wrap">
+
+      <section class="m-5" id="class_card"  onclick="get()">
+          <h3 class ="m-4">Class 1</h3>
+          <h5 class="m-4"> Instructor:</h5>
+          <h5 class="m-4"> Section:</h5>
+      </section>
+
+      <section class="m-5" id="class_card" onclick="get()">
+          <h3 class ="m-4">Class 2</h3>
+          <h5 class="m-4"> Instructor:</h5>
+          <h5 class="m-4"> Section:</h5>
+      </section>
+
+      
+      <section class="m-5" id="class_card" onclick="get()">
+          <h3 class ="m-4">Class 3</h3>
+          <h5 class="m-4"> Instructor:</h5>
+          <h5 class="m-4"> Section:</h5>
+      </section>
+
+      <section class="m-5" id="class_card" onclick="get()">
+          <h3 class ="m-4">Class 4</h3>
+          <h5 class="m-4"> Instructor:</h5>
+          <h5 class="m-4"> Section:</h5>
+      </section>
+</div>
+  </div>
+</section> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+    <script src="script.js"> </script>
+</body>
+</html>  
