@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="/css/style.css">
   </head>
     <title>Class</title>
 </head>
@@ -63,102 +63,46 @@
             <option value="class4">Class 4</option>
           </select>
         </div>
-        <div>  
-          <button id="create_class" data-bs-toggle="modal" data-bs-target="#grades_form"> Create Class</button>
-        </div>
+        
 
-        <div class="modal fade" id="grades_form">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Create Class</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                  
-                  <form method ="POST" action="">
-                      <div class="mb-3">
-                        <label for="class" class="col-form-label"> Class Name</label>
-                        <input type="text" class="form-control" id="" name="classname">
-                        
-                      </div>
-    
-                      <div class="mb-3">
-                        <label for="yearlevel" class="col-form-label"> Year Level</label>
-                        <input type="text" class="form-control" id="" name="yearlevel">
-    
-                      </div>
-    
-                      <div class="mb-3">
-                        <label for="section" class="col-form-label"> Section</label>
-                        <input type="text" class="form-control" id="" name="section">
-    
-                      </div>
-    
-            
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        
-                        <input type="submit" name ="grades_edit" class="btn btn-secondary" value="Create"> 
-                      </div>
-                    </form>
-                </div>
-                
-              </div>
-            </div>
-          </div>
-            </div>
-            
-        </div>
+      
         
     </div>
 
 
     <div id="main_class" class=" container d-flex flex-wrap">
 
-        <section class="m-5" id="class_card"  onclick="get()">
+        <a href="/class/1"><section class="m-5" id="class_card">
             <h3 class ="m-4" id="class_name">Class 1</h3>
             <h5 class="m-4"> Year Level:</h5>
             <h5 class="m-4"> Section:</h5>
            
-            <div id="class_button" class="d-flex justify-content-around">  
-            <button class="" id="edit_class"> Edit</button>
-            <button class="" id="delete_class"> Delete</button>
-            </div>
-        </section>
+            
+        </section></a>
 
-        <section class="m-5" id="class_card" onclick="get()">
+        <section class="m-5" id="class_card" >
             <h3 class ="m-4" id="class_name">Class 2</h3>
             <h5 class="m-4"> Year Level:</h5>
             <h5 class="m-4"> Section:</h5>
            
-            <div id="class_button" class="d-flex justify-content-around">  
-            <button class="" id="edit_class"> Edit</button>
-            <button class="" id="delete_class"> Delete</button>
-            </div>
+            
         </section>
 
         
-        <section class="m-5" id="class_card" onclick="get()">
+        <section class="m-5" id="class_card">
             <h3 class ="m-4" id="class_name">Class 3</h3>
             <h5 class="m-4"> Year Level:</h5>
             <h5 class="m-4"> Section:</h5>
            
-            <div id="class_button" class="d-flex justify-content-around">  
-            <button class="" id="edit_class"> Edit</button>
-            <button class="" id="delete_class"> Delete</button>
-            </div>
+            
         </section>
 
-        <section class="m-5" id="class_card" onclick="get()">
+        <section class="m-5" id="class_card">
             <h3 class ="m-4">Class 4</h3>
             <h5 class="m-4"> Year Level:</h5>
             <h5 class="m-4"> Section:</h5>
            
-            <div id="class_button" class="d-flex justify-content-around">  
-            <button class="" id="edit_class"> Edit</button>
-            <button class="" id="delete_class"> Delete</button>
-            </div>
+           
         </section>
 
   

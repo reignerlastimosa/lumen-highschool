@@ -91,6 +91,25 @@ app.get("/drop-account-table", (req,res)=>{
 })
 
 
+app.get("/create-class1-table",(req,res)=>{
+    let sql = "CREATE TABLE class1 (account_id int, firstname varchar(50), lastname varchar(50), section varchar(50), role varchar(50),FOREIGN KEY (account_id) REFERENCES account(id))";
+
+    database.query(sql,(err,result)=>{
+        if(!err){
+            res.send("successfully created class1 table");
+        }
+        else{
+            res.send("failed to create class1 table");
+        }
+    })
+});
+
+
+//app.get("/add-class1-student",(req,res)=>{
+    //let sql = "INSERT INTO class1 (account_id, firstname, lastname, //section, role) VALUES (SELECT )
+//})
+
+
 
 app.post('/login', (req,res)=>{
     
@@ -106,7 +125,7 @@ app.post('/login', (req,res)=>{
                 req.session.username = username;
                 req.session.password = password;
                 req.session.account_id = result[0].id;
-                console.log(req.session.account_id);
+                
                 res.redirect("/index");
                 
             }
@@ -229,33 +248,56 @@ app.get('/index', (req,res)=>{
 });
 
 app.get('/grades', (req,res)=>{
-    let sql = "SELECT * FROM student";
+    if(req.session.loggedin) {
+        let sql = "SELECT * FROM student";
 
-    database.query(sql,(err,result)=>{
-        if(!err){
-            res.render('grades', {students:result});
-
-        }
-        else{
-            throw err;
-        }
-    });
+        database.query(sql,(err,result)=>{
+            if(!err){
+                res.render('grades', {students:result});
+    
+            }
+            else{
+                throw err;
+            }
+        }); 
+    }
+    else{
+        res.send('Please log in to view the page');
+    }
+  
 });
 
 app.get('/announcement', (req,res)=>{
-    res.render('announcement');
+    if(req.session.loggedin) {
+        res.render('announcement');   
+    }
+    else{
+        res.send('Please log in to view the page');
+    }
+   
 });
 
 app.get('/class', (req,res)=>{
     res.render('class');
 });
 
-app.get('/grades', (req,res)=>{
-    res.render('grades');
+
+app.get('/class/:id', (req,res)=>{
+    console.log(req.params.id);
+
+    res.render("lesson", {title: "Class " + req.params.id});
 });
 
+
+
 app.get('/schedule', (req,res)=>{
-    res.render('schedule');
+    if(req.session.loggedin) {
+        res.render('schedule'); 
+    }
+    else{
+        res.send('Please log in to view the page');
+    }
+  
 });
 
 
