@@ -1,6 +1,8 @@
 const express = require('express');
 const database = require('./database');
-
+const getData = require('./getData');
+const session = require('express-session');
+const { request } = require('express');
 const app = express();
 const PORT = process.env.PORT || 26;
 
@@ -14,6 +16,11 @@ database.connect((err)=>{
     }
 });
 
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}));
 
 app.use(express.json());
 
@@ -59,7 +66,7 @@ app.get("/create-student-table",(req,res)=>{
 
 
 app.get("/create-account-table",(req,res)=>{
-    let sql="CREATE TABLE account(id int AUTO_INCREMENT, username varchar(50), password varchar(50), PRIMARY KEY (id))";
+    let sql="CREATE TABLE account(id int AUTO_INCREMENT, username varchar(50), password varchar(50), firstname varchar (50), lastname varchar (50), birthday date, PRIMARY KEY (id))";
     database.query(sql,(err,result)=>{
         if(!err){
             res.send("successfully created account table");
@@ -71,18 +78,47 @@ app.get("/create-account-table",(req,res)=>{
 });
 
 
-app.get("/create-profile-table",(req,res)=>{
-    let sql="CREATE TABLE profile(id int AUTO_INCREMENT, firstname varchar(50), lastname varchar(50), email varchar(50), birthday datetime, PRIMARY KEY (id))";
+app.get("/drop-account-table", (req,res)=>{
+    let sql = "DROP TABLE account";
     database.query(sql,(err,result)=>{
         if(!err){
-            res.send("successfully created profile table");
+            res.send("successfully dropped account table");
         }
         else{
-            res.send("failed to create profile table");
+            res.send("failed to drop account table");
+        }
+    });
+})
+
+
+
+app.post('/login', (req,res)=>{
+    
+    var username = req.body.username;
+    var password = req.body.password;
+
+    var sql = `SELECT username, password FROM account where username = "${username}" AND password = "${password}"` ;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            if(result.length > 0) {
+                console.log(result);
+                req.session.loggedin = true;
+                req.session.username = username;
+                req.session.password = password;
+
+                res.redirect("/index");
+                
+            }
+            else {
+                res.send("No account found");
+            }
+          
+        }
+        else{
+            throw err;
         }
     });
 });
-
 
 app.post('/add-student',(req,res)=>{
     
@@ -110,28 +146,7 @@ app.post('/add-student',(req,res)=>{
 
 
 
-app.post('/login',(req,res)=>{
-    
-    var username = req.body.username;
-    var password = req.body.password;
 
-    var sql = "SELECT * FROM account";
-    database.query(sql,(err,result)=>{
-        if(!err){
-            for(var i =0; i<result.length;i++){
-                if(username == result[i].username && password == result[i].password){
-                    console.log("success");
-                    res.redirect("/index");
-                }
-                
-            }
-           
-        }
-        else{
-            throw err;
-        }
-    });
-});
 
 app.post('/edit_grades',(req,res)=>{
     var firstname = req.body.firstname;
@@ -209,7 +224,31 @@ app.get('/login', (req,res)=>{
 
 
 app.get('/index', (req,res)=>{
-    res.render('index');
+
+    if(req.session.loggedin) {
+
+
+        let sql = `SELECT id, firstname, lastname, birthday from account WHERE username = "${req.session.username}" AND password = "${req.session.password}"`;
+        database.query(sql,(err,result)=>{
+            if(!err){ 
+            res.render('index', { email : req.session.username, password: req.session.password, id: result[0].id, firstname: result[0].firstname, lastname: result[0].lastname, birthday: result[0].birthday });
+                
+               
+            }
+            else{
+                throw err;
+            }
+        });
+
+        
+    }
+    else{
+        res.send('Please log in to view the page');
+    }
+    
+   
+    
+    
 });
 
 app.get('/grades', (req,res)=>{
