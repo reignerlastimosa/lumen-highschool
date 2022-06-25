@@ -97,7 +97,7 @@ app.post('/login', (req,res)=>{
     var username = req.body.username;
     var password = req.body.password;
 
-    var sql = `SELECT username, password FROM account where username = "${username}" AND password = "${password}"` ;
+    var sql = `SELECT id, username, password FROM account where username = "${username}" AND password = "${password}"` ;
     database.query(sql,(err,result)=>{
         if(!err){
             if(result.length > 0) {
@@ -105,7 +105,8 @@ app.post('/login', (req,res)=>{
                 req.session.loggedin = true;
                 req.session.username = username;
                 req.session.password = password;
-
+                req.session.account_id = result[0].id;
+                console.log(req.session.account_id);
                 res.redirect("/index");
                 
             }
@@ -166,50 +167,26 @@ app.post('/edit_grades',(req,res)=>{
   
 });
 
-app.post('/edit_profile',(req,res)=>{
+app.post('/edit_account',(req,res)=>{
     var firstname = req.body.firstname;
     var lastname = req.body.lastname;
     var email = req.body.email;
     var password = req.body.password;
-    var birthday = req.body.birthday;
-    var id = req.body.id;
+    
+    
 
 
-    var sql = "SELECT * FROM account";
+    var sql = `UPDATE account SET firstname = "${firstname}", lastname = "${lastname}", username="${email}", password="${password}"  WHERE id = ${req.session.account_id}`;
+    
     database.query(sql,(err,result)=>{
         if(!err){
-            for(var i =0; i<result.length;i++){
-                if(email == result[i].email && password == result[i].password){
-                    console.log("found an account");
-                    
-                    var sql2 = `UPDATE account SET email = "${email}, password = "${password}"`;
-                    var sql3 = `UPDATE profile SET firstname = "${firstname}", lastname="${lastname}", email = "${email}", password= "${password}", birthday = "${birthday}", id = "${id}"`;
-
-                    database.query(sql2,(err,result)=>{ 
-                        if(!err){   
-                            console.log("updated account table");
-                        }
-                        else{
-                            throw err;
-                        }
-                    });
-
-                    database.query(sql3,(err,result)=>{
-                        if(!err){
-                            console.log("updated profile table");
-                        }
-                        else{
-                            throw err;
-                        }
-                    });
-                }
-                
-            }
+            console.log("successfully updated account table");
+            res.redirect("/index");
         }
         else{
             throw err;
         }
-    });
+    })
 });
 
 

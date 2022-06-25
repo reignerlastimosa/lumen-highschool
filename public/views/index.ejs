@@ -68,7 +68,7 @@
                     <h5><%= lastname %></h5>
                     <h5><%= email %></h5>
                     <h5><%= password %></h5>
-                    <h5>Birthday</h5>
+                    <h5>Null</h5>
                     <h5><%= id %></h5>
                    
                 </div>
@@ -89,42 +89,42 @@
           </div>
           <div class="modal-body">
             
-            <form method ="POST" action="/edit_profile">
+            <form method ="POST" action="/edit_account">
                 <div class="mb-3">
                   <label for="firstname" class="col-form-label"> First Name</label>
-                  <input type="text" class="form-control" id="" name="firstname">
+                  <input type="text" class="form-control" id="" name="firstname" value=<%= firstname %>>
                   
                 </div>
 
                 <div class="mb-3">
                   <label for="firstname" class="col-form-label"> Last Name</label>
-                  <input type="text" class="form-control" id="" name="lastname">
+                  <input type="text" class="form-control" id="" name="lastname" value=<%= lastname %>>
                   
                 </div>
 
 
                 <div class="mb-3">
                   <label for="email" class="col-form-label"> Email</label>
-                  <input type="text" class="form-control" id="" name="email">
+                  <input type="text" class="form-control" id="" name="email" value=<%= email %>>
 
                 </div>
 
                 <div class="mb-3">
                   <label for="grades" class="col-form-label"> Password</label>
-                  <input type="password" class="form-control" id="" name="password">
+                  <input type="password" class="form-control" id="" name="password" value=<%= password %>>
 
                 </div>
 
       
                 <div class="mb-3">
                   <label for="grades" class="col-form-label"> Birthday</label>
-                  <input type="date" class="form-control" id="" name="birthday">
+                  <input type="date" class="form-control" id="" name="birthday" value=<%= birthday %>>
 
                 </div>
 
                 <div class="mb-3">
                   <label for="grades" class="col-form-label"> I.D</label>
-                  <input type="text" class="form-control" id="" name="id">
+                  <input type="text" class="form-control" id="" name="id" value=<%= id %> disabled>
 
                 </div>
 
