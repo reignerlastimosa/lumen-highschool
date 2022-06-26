@@ -66,7 +66,7 @@ app.get("/create-student-table",(req,res)=>{
 
 
 app.get("/create-account-table",(req,res)=>{
-    let sql="CREATE TABLE account(id int AUTO_INCREMENT, username varchar(50), password varchar(50), firstname varchar (50), lastname varchar (50), birthday date, PRIMARY KEY (id))";
+    let sql="CREATE TABLE account(id int AUTO_INCREMENT, username varchar(50), password varchar(50), firstname varchar (50), lastname varchar (50), birthday date, role varchar(50), section varchar(50) PRIMARY KEY (id))";
     database.query(sql,(err,result)=>{
         if(!err){
             res.send("successfully created account table");
@@ -88,6 +88,10 @@ app.get("/drop-account-table", (req,res)=>{
             res.send("failed to drop account table");
         }
     });
+})
+
+app.get("/insert-account",(req,res)=>{
+    let sql = `INSERT INTO account(username, password,firstname,lastname, role, section) VALUES("reignerlastimosa@gmail.com", "123", "Reigner", "Lastimosa", "admin", "3ISA"`;
 })
 
 
@@ -278,7 +282,12 @@ app.get('/announcement', (req,res)=>{
 });
 
 app.get('/class', (req,res)=>{
-    res.render('class');
+    if(req.session.loggedin) {
+        res.render('class');   
+    }
+    else{
+        res.send('Please log in to view the page');
+    }
 });
 
 

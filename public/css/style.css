@@ -119,6 +119,40 @@ ul li {
     
 }
 
+
+#photo{
+    height:200px;
+}
+
+
+.profile-pic{
+    height:200px;
+    width:200px;
+    border:1px solid gray;
+    position:absolute;
+    top:5%;
+    border-radius: 50%;
+    overflow:hidden;
+    background-color: #D9D9D9;
+    
+    
+}
+
+#file{
+    display:none;
+}
+
+#uploadBtn{
+    height:40px;
+    width:100%;
+    position:absolute;
+    bottom:0;
+    text-align: center;
+    background: rgba(0,0,0,0.7);
+    color:wheat;
+    cursor:pointer;
+}
+
 #profile_details{
    
     background-color: #D9D9D9;
