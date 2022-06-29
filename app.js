@@ -96,7 +96,7 @@ app.get("/insert-account",(req,res)=>{
 
 
 app.get("/create-class-table",(req,res)=>{
-    let sql = "CREATE TABLE class (class_id varchar(50), account_id int, section varchar(50), year_level int, FOREIGN KEY (account_id) REFERENCES account(id))";
+    let sql = "CREATE TABLE class (class_id varchar(50), account_id int, firstname varchar(50), lastname varchar(50), section varchar(50), year_level int, grade int, FOREIGN KEY (account_id) REFERENCES account(id))";
 
     database.query(sql,(err,result)=>{
         if(!err){
@@ -170,7 +170,7 @@ app.get("/class/:id/:section/add-announcement",(req,res)=>{
 
 app.get("/add-class-account",(req,res)=>{
    
-    let sql = `INSERT  INTO class(class_id,account_id, section, year_level) VALUES('STATS101', 1,'3ISA',7)`;
+    let sql = `INSERT  INTO class(class_id,account_id, firstname, lastname, section, year_level, grade) VALUES('STATS101', 1, 'Reigner', 'Lastimosa','3ISA',7, 85)`;
     database.query(sql,(err,result)=>{
         if(!err){
 
