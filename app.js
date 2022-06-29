@@ -66,7 +66,7 @@ app.get("/create-student-table",(req,res)=>{
 
 
 app.get("/create-account-table",(req,res)=>{
-    let sql="CREATE TABLE account(id int AUTO_INCREMENT, username varchar(50), password varchar(50), firstname varchar (50), lastname varchar (50), birthday date, role varchar(50), section varchar(50) PRIMARY KEY (id))";
+    let sql="CREATE TABLE account(id int AUTO_INCREMENT, username varchar(50), password varchar(50), firstname varchar (50), lastname varchar (50), birthday date, role varchar(50), PRIMARY KEY (id))";
     database.query(sql,(err,result)=>{
         if(!err){
             res.send("successfully created account table");
@@ -95,23 +95,35 @@ app.get("/insert-account",(req,res)=>{
 })
 
 
-app.get("/create-class1-table",(req,res)=>{
-    let sql = "CREATE TABLE class1 (account_id int, firstname varchar(50), lastname varchar(50), section varchar(50), role varchar(50),FOREIGN KEY (account_id) REFERENCES account(id))";
+app.get("/create-class-table",(req,res)=>{
+    let sql = "CREATE TABLE class (class_id varchar(50), account_id int, section varchar(50), year_level int, FOREIGN KEY (account_id) REFERENCES account(id))";
 
     database.query(sql,(err,result)=>{
         if(!err){
-            res.send("successfully created class1 table");
+            res.send("successfully created class table");
         }
         else{
-            res.send("failed to create class1 table");
+            res.send("failed to create class table");
         }
     })
 });
 
 
-//app.get("/add-class1-student",(req,res)=>{
-    //let sql = "INSERT INTO class1 (account_id, firstname, lastname, //section, role) VALUES (SELECT )
-//})
+
+app.get("/add-class-account",(req,res)=>{
+   
+    let sql = `INSERT  INTO class(class_id,account_id, section, year_level) VALUES('STATS101', 1,'3ISA',7)`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+
+          
+            console.log(result);
+        }
+        else{
+            throw err;
+        }
+    })
+});
 
 
 
@@ -283,7 +295,18 @@ app.get('/announcement', (req,res)=>{
 
 app.get('/class', (req,res)=>{
     if(req.session.loggedin) {
-        res.render('class');   
+        let sql = `SELECT class_id, year_level, section FROM class WHERE account_id = ${ req.session.account_id}`;
+
+        database.query(sql,(err,result)=>{
+            if(!err){
+                res.render('class', {classes:result});
+                console.log(result);
+    
+            }
+            else{
+                throw err;
+            }
+        }); 
     }
     else{
         res.send('Please log in to view the page');

@@ -70,41 +70,22 @@
     </div>
 
 
-    <div id="main_class" class=" container d-flex flex-wrap">
+    <div id="main_class" class=" container d-flex  justify-content-center">
 
-        <a href="/class/1"><section class="m-5" id="class_card">
-            <h3 class ="m-4" id="class_name">Class 1</h3>
-            <h5 class="m-4"> Year Level:</h5>
-            <h5 class="m-4"> Section:</h5>
-           
-            
-        </section></a>
 
-        <section class="m-5" id="class_card" >
-            <h3 class ="m-4" id="class_name">Class 2</h3>
-            <h5 class="m-4"> Year Level:</h5>
-            <h5 class="m-4"> Section:</h5>
-           
-            
+      <% classes.forEach((c) => {
+        %>
+        <section class="m-5"> <a href="/class/1">
+            <h3 class ="m-4" id="class_name"><%= c.class_id %></h3>
+            <h5 class="m-4"> Year Level: <%=c.year_level %></h5>
+            <h5 class="m-4"> Section: <%=c.section %></h5>
+          </a>
         </section>
-
+            <%}) %>
+            
         
-        <section class="m-5" id="class_card">
-            <h3 class ="m-4" id="class_name">Class 3</h3>
-            <h5 class="m-4"> Year Level:</h5>
-            <h5 class="m-4"> Section:</h5>
-           
-            
-        </section>
 
-        <section class="m-5" id="class_card">
-            <h3 class ="m-4">Class 4</h3>
-            <h5 class="m-4"> Year Level:</h5>
-            <h5 class="m-4"> Section:</h5>
-           
-           
-        </section>
-
+       
   
 </div>
 </section>
