@@ -75,10 +75,12 @@
 
       <% classes.forEach((c) => {
         %>
-        <section class="m-5"> <a href="/class/1">
+        <section class="m-5"> <a href="/class/<%=c.class_id%>/<%=c.section%>">
+          
             <h3 class ="m-4" id="class_name"><%= c.class_id %></h3>
             <h5 class="m-4"> Year Level: <%=c.year_level %></h5>
             <h5 class="m-4"> Section: <%=c.section %></h5>
+            
           </a>
         </section>
             <%}) %>

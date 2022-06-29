@@ -109,6 +109,64 @@ app.get("/create-class-table",(req,res)=>{
 });
 
 
+app.get("/create-lesson-table",(req,res)=>{
+    let sql = "CREATE TABLE lesson (lesson_id int AUTO_INCREMENT, class_id varchar(50), lesson_name varchar(50), lesson_description varchar(50), section varchar(50), PRIMARY KEY (lesson_id))";
+
+    database.query(sql,(err,result)=>{
+        if(!err){
+            res.send("Successfully created lesson table");
+        }
+        else{
+            throw err;
+        }
+    });
+});
+
+
+app.get("/create-announcement-table",(req,res)=>{
+    let sql = "CREATE TABLE announcement (announcement_id int AUTO_INCREMENT, class_id varchar(50), announcement_title varchar(50), announcement_body varchar(200), announcement_date date, section varchar(50), PRIMARY KEY (announcement_id))";
+
+    database.query(sql,(err,result)=>{
+        if(!err){
+            res.send("Successfully created announcement table");
+        }
+        else{
+            throw err;
+        }
+    });
+});
+
+
+app.get("/class/:id/:section/add-lesson",(req,res)=>{
+    let sql =`INSERT INTO lesson(class_id, lesson_name, lesson_description, section) VALUES("${req.params.id}","MEASURE OF CENTRAL TENDENCY", "Recalling Mean, median and mode","${req.params.section}")`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            console.log("successfully inserted new lesson");
+        }
+        else{
+            throw err;
+        }
+    });
+});
+
+
+app.get("/class/:id/:section/add-announcement",(req,res)=>{
+    
+
+    let sql =`INSERT INTO announcement(class_id, announcement_title, announcement_body, announcement_date,section) VALUES("${req.params.id}","HOMEWORK #1", "Please answer your homework #1 at page 34.", "2022-06-29","${req.params.section}")`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            console.log("successfully inserted new announcement");
+        }
+        else{
+            throw err;
+        }
+    });
+});
+
+
+
+
 
 app.get("/add-class-account",(req,res)=>{
    
@@ -293,6 +351,9 @@ app.get('/announcement', (req,res)=>{
    
 });
 
+
+
+
 app.get('/class', (req,res)=>{
     if(req.session.loggedin) {
         let sql = `SELECT class_id, year_level, section FROM class WHERE account_id = ${ req.session.account_id}`;
@@ -314,10 +375,37 @@ app.get('/class', (req,res)=>{
 });
 
 
-app.get('/class/:id', (req,res)=>{
-    console.log(req.params.id);
+app.get('/class/:id/:section', (req,res)=>{
+    let sql =`SELECT lesson_name, lesson_description FROM lesson WHERE class_id = "${req.params.id}" AND section = "${req.params.section}"`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            
+            res.render("lesson", {title: req.params.id, lessons:result, section:req.params.section});
+        }
+        else{
+            throw err;
+        }
+    });
+    
 
-    res.render("lesson", {title: "Class " + req.params.id});
+   
+});
+
+
+app.get('/class/:id/:section/announcement_class', (req,res)=>{
+    let sql =`SELECT announcement_title, announcement_body, announcement_date FROM announcement WHERE class_id = "${req.params.id}" AND section = "${req.params.section}"`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            
+            res.render("announcement_class", {title: req.params.id, announcements:result, section:req.params.section});
+        }
+        else{
+            throw err;
+        }
+    });
+    
+
+   
 });
 
 

@@ -20,7 +20,7 @@
             <h3 class="m-4"><%= title %></h3>
             <ul>
                 <a href=""> <li class="class_active"> Lessons</li></a>
-                <a href=""> <li> Announcement</li></a>
+                <a href="/class/<%=title%>/<%=section%>/announcement_class"> <li> Announcement</li></a>
                 <a href=""> <li> Students</li></a>
                 
             </ul>
@@ -33,15 +33,13 @@
                 
             </div>
 
+            <% lessons.forEach((les)=> { %>
             <section class="m-3">
-                <h2 class="m-4">Lesson 1</h2>
-                <p class="m-4">Information and Computing Sciences</p>
+                <h2 class="m-4"><%=les.lesson_name%></h2>
+                <p class="m-4"><%=les.lesson_description%></p>
             </section>
-            
-            <section class="m-3">
-                <h2 class="m-4">Lesson 2</h2>
-                <p class="m-4">Information Management</p>
-            </section>
+            <%}) %>
+           
         </div>
     </div>
 

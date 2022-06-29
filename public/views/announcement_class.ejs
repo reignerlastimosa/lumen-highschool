@@ -12,15 +12,15 @@
 <body>
     
     <section id="lesson_header" class="d-flex align-items-center justify-content-end"> 
-        <h2>Announcement</h2>
+        <h2><%= title %></h2>
     </section>
-
+    
     <div>
-        <nav id="lesson_nav" class="d-flex flex-column">
-            <h3 class="m-4">Class 1</h3>
-            <ul class="d-flex flex-column justify-content-around" id="lesson_lists">
-                <a href=""> <li> Lessons</li></a>
-                <a href=""> <li> Announcement</li></a>
+        <nav id="lesson_nav">
+            <h3 class="m-4"><%= title %></h3>
+            <ul>
+                <a href="/class/<%=title%>/<%=section%>/"> <li > Lessons</li></a>
+                <a href="/class/<%=title%>/<%=section%>/announcement_class"> <li class="class_active"> Announcement</li></a>
                 <a href=""> <li> Students</li></a>
                 
             </ul>
@@ -28,71 +28,19 @@
 
         <div id="lesson_main" class="d-flex align-items-center flex-column">
             <div id="lesson_buttons" class="m-4">
-                <button  data-bs-toggle="modal" data-bs-target="#enroll">Add</button>
-                <button  data-bs-toggle="modal" data-bs-target="#enroll">Edit</button>
-
-                
+                <button>Add</button>
+                <button>Edit</button>
                 
             </div>
 
-            <div class="modal fade" id="enroll">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Enrollment Form</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                      <p class="lead">Fill out this form and we will get back to you</p>
-                      <form method ="POST" action="">
-                          <div class="mb-3">
-                            <label for="first-name" class="col-form-label"> First Name:</label>
-                            <input type="text" class="form-control" id="first-name" name="firstname">
-                            
-                          </div>
-        
-                          <div class="mb-3">
-                            <label for="last-name" class="col-form-label"> First Name:</label>
-                            <input type="text" class="form-control" id="last-name" name="lastname">
-        
-                          </div>
-        
-                          <div class="mb-3">
-                            <label for="email" class="col-form-label"> Email:</label>
-                            <input type="email" class="form-control" id="email" name="email">
-        
-                          </div>
-        
-                          <div class="mb-3">
-                            <label for="phone" class="col-form-label"> Phone:</label>
-                            <input type="tel" class="form-control" id="phone" name="phone">
-        
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            
-                            <input type="submit" name ="submit_button" class="btn btn-primary" value="Add"> 
-                          </div>
-                        </form>
-                    </div>
-                    
-                  </div>
-                </div>
-              </div>
-                </div>
-                
-
+            <% announcements.forEach((ann)=> { %>
             <section class="m-3">
-                <h2 class="m-4">Announcement 1</h2>
-                <h5 class="m-4">Date Posted: </h5>
-                <p class="m-4">Information and Computing Sciences</p>
+                <h2 class="m-4"><%=ann.announcement_title%></h2>
+                <h5 class="m-4"><%=ann.announcement_date%></h2>
+                <p class="m-4"><%=ann.announcement_body%></p>
             </section>
-
-            <section class="m-3">
-                <h2 class="m-4">Announcement 2</h2>
-                <h5 class="m-4">Date Posted: </h5>
-                <p class="m-4">Information Management</p>
-            </section>
+            <%}) %>
+           
         </div>
     </div>
 
