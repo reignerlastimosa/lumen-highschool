@@ -91,12 +91,20 @@ app.get("/drop-account-table", (req,res)=>{
 })
 
 app.get("/insert-account",(req,res)=>{
-    let sql = `INSERT INTO account(username, password,firstname,lastname, role, section) VALUES("reignerlastimosa@gmail.com", "123", "Reigner", "Lastimosa", "admin", "3ISA"`;
-})
+    let sql = `INSERT INTO account(username, password,firstname,lastname, birthday) VALUES("catherinebautista@gmail.com", "123", "Catherine", "Bautista", "2000-03-12")`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            console.log("successfulyl created new account");
+        }
+        else{
+            throw err;
+        }
+    });
+});
 
 
 app.get("/create-class-table",(req,res)=>{
-    let sql = "CREATE TABLE class (class_id varchar(50), account_id int, firstname varchar(50), lastname varchar(50), section varchar(50), year_level int, grade int, FOREIGN KEY (account_id) REFERENCES account(id))";
+    let sql = "CREATE TABLE class (class_id varchar(50), account_id int, firstname varchar(50), lastname varchar(50), section varchar(50), year_level int, grade int, attendance DOUBLE,FOREIGN KEY (account_id) REFERENCES account(id))";
 
     database.query(sql,(err,result)=>{
         if(!err){
@@ -170,7 +178,7 @@ app.get("/class/:id/:section/add-announcement",(req,res)=>{
 
 app.get("/add-class-account",(req,res)=>{
    
-    let sql = `INSERT  INTO class(class_id,account_id, firstname, lastname, section, year_level, grade) VALUES('STATS101', 1, 'Reigner', 'Lastimosa','3ISA',7, 85)`;
+    let sql = `INSERT  INTO class(class_id,account_id, firstname, lastname, section, year_level, grade,attendance) VALUES('ENGLISH101', 1, 'Reigner', 'Lastimosa','3ISA',7, 90, 87)`;
     database.query(sql,(err,result)=>{
         if(!err){
 
@@ -341,9 +349,42 @@ app.get('/grades', (req,res)=>{
   
 });
 
-app.get('/announcement', (req,res)=>{
+function getAnnouncement(req,res,next){
+    let sql = `SELECT class_id from class WHERE account_id = ${req.session.account_id}`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            
+            req.session.announcements = [];
+            for(var i = 0; i<result.length;i++){
+                
+                
+                req.session.announcements.push('"'+result[i].class_id+ '"');
+
+                console.log(req.session.announcements);
+            }
+
+            next();
+        }
+        else{
+            throw err;
+        }
+    });
+};
+
+app.get('/announcement', getAnnouncement,(req,res)=>{
     if(req.session.loggedin) {
-        res.render('announcement');   
+        let sql = `SELECT class_id, announcement_title, announcement_body, announcement_date from announcement where class_id IN (${req.session.announcements})`;
+        database.query(sql,(err,result)=>{
+            if(!err){
+                console.log(result);
+             res.render("announcement",{announcements:result});
+            }
+            else{
+                throw err;
+            }
+        });
+
+         
     }
     else{
         res.send('Please log in to view the page');
@@ -406,6 +447,19 @@ app.get('/class/:id/:section/announcement_class', (req,res)=>{
     
 
    
+});
+
+app.get("/class/:id/:section/students",(req,res)=>{
+    let sql = `SELECT firstname, lastname, section, year_level, attendance FROM class WHERE class_id ="${req.params.id}"`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            console.log(result);
+            res.render("student", {title:req.params.id,students:result, section:req.params.section})
+        }
+        else{
+            throw err;
+        }
+    });
 });
 
 

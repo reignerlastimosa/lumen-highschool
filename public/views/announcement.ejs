@@ -51,17 +51,15 @@
         <h1 class="">Announcement</h1>
         </div>
 
+        <%announcements.forEach((announcement)=> { %>
         <section class="m-5">
-            <h2>Announcement 1</h2>
-            <h5> Date Created: </h5>
-            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. A necessitatibus ducimus exercitationem! Ipsum sit alias vel laborum eius saepe dignissimos exercitationem dolorum assumenda officiis fugiat labore, animi cumque ullam et blanditiis numquam corporis placeat dolores commodi autem nostrum veritatis? Tempore?</p>
+            <h2><%= announcement.class_id%></h2>
+            <h3><%= announcement.announcement_title%></h3>
+            <h5> <%= announcement.announcement_date%></h5>
+            <p> <%= announcement.announcement_body%></p>
         </section>
-
-        <section class="m-5">
-            <h2>Announcement 1</h2>
-            <h5> Date Created: </h5>
-            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. A necessitatibus ducimus exercitationem! Ipsum sit alias vel laborum eius saepe dignissimos exercitationem dolorum assumenda officiis fugiat labore, animi cumque ullam et blanditiis numquam corporis placeat dolores commodi autem nostrum veritatis? Tempore?</p>
-        </section>
+        <% }) %>
+       
     </section>
 
 
