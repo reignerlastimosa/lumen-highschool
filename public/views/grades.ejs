@@ -124,10 +124,11 @@
               <tr>
                 <th scope="col">First Name</th>
                 <th scope="col">Last Name</th>
-                <th scope="col">Year-Sec</th>
-                <th scope="col">A.Y</th>
                 <th scope="col">Section</th>
+                <th scope="col">Class</th>
+                <th scope="col">Activity</th>
                 <th scope="col">Grade</th>
+                
                 
               </tr>
             </thead>
@@ -137,10 +138,10 @@
                 <tr>
                   <td> <%= student.firstname %></td>
                   <td> <%= student.lastname %></td>
-                  <td> <%= student.yearsec %></td>
-                  <td> <%= student.academicyear %></td>
-                  <td> <%= student.class %></td>
-                  <td> <%= student.grade %></td>
+                  <td> <%= student.section %></td>
+                  <td> <%= student.class_id %></td>
+                  <td> <%= student.activity_name %></td>
+                  <td> <%= student.activity_grade %></td>
                 </tr>
                <%}) %>
            

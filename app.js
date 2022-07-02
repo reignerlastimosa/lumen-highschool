@@ -117,6 +117,62 @@ app.get("/create-class-table",(req,res)=>{
 });
 
 
+app.get("/create-grades-table",(req,res)=>{
+    let sql = "CREATE TABLE grades (account_id int, firstname varchar(50), lastname varchar(50), class_id varchar(50), section varchar(50),activity_name varchar(50), activity_grade int,FOREIGN KEY(account_id) REFERENCES account(id))";
+
+    database.query(sql,(err,result)=>{
+        if(!err){
+            res.send("successfully created grades table");
+        }
+        else{
+           throw err;
+        }
+    })
+});
+
+
+app.get("/insert-grades",(req,res)=>{
+    let sql = `INSERT INTO grades(account_id,firstname,lastname,class_id,section, activity_name, activity_grade) VALUES(2, "Ellah", "Chua", "STATS101", "3ISB", "Homework 1", 90)`;
+
+
+    database.query(sql,(err,result)=>{
+        if(!err){
+            res.send("successfully inserted new grades");
+        }
+        else{
+           throw err;
+        }
+    })
+})
+
+
+app.get("/create-schedule-table",(req,res)=>{
+    let sql = "CREATE TABLE schedule (schedule_id int AUTO_INCREMENT,class_id varchar(50), section varchar(50),schedule_name varchar(50), schedule_date date, PRIMARY KEY(schedule_id))";
+
+    database.query(sql,(err,result)=>{
+        if(!err){
+            res.send("successfully created schedule table");
+        }
+        else{
+           throw err;
+        }
+    })
+});
+
+app.get("/insert-schedule",(req,res)=>{
+    let sql = `INSERT INTO schedule(class_id, section, schedule_name, schedule_date) VALUES("ENGLISH101", "3ISB", "Homework 1", "2022-07-11")`;
+
+    database.query(sql,(err,result)=>{
+        if(!err){
+            res.send("successfully inserted new schedule");
+        }
+        else{
+           throw err;
+        }
+    });
+});
+
+
 app.get("/create-lesson-table",(req,res)=>{
     let sql = "CREATE TABLE lesson (lesson_id int AUTO_INCREMENT, class_id varchar(50), lesson_name varchar(50), lesson_description varchar(50), section varchar(50), PRIMARY KEY (lesson_id))";
 
@@ -143,6 +199,9 @@ app.get("/create-announcement-table",(req,res)=>{
         }
     });
 });
+
+
+
 
 
 app.get("/class/:id/:section/add-lesson",(req,res)=>{
@@ -331,7 +390,7 @@ app.get('/index', (req,res)=>{
 
 app.get('/grades', (req,res)=>{
     if(req.session.loggedin) {
-        let sql = "SELECT * FROM student";
+        let sql = "SELECT * FROM grades";
 
         database.query(sql,(err,result)=>{
             if(!err){
@@ -354,13 +413,13 @@ function getAnnouncement(req,res,next){
     database.query(sql,(err,result)=>{
         if(!err){
             
-            req.session.announcements = [];
+            req.session.classes = [];
             for(var i = 0; i<result.length;i++){
                 
                 
-                req.session.announcements.push('"'+result[i].class_id+ '"');
+                req.session.classes.push('"'+result[i].class_id+ '"');
 
-                console.log(req.session.announcements);
+                console.log(req.session.clasess);
             }
 
             next();
@@ -373,7 +432,7 @@ function getAnnouncement(req,res,next){
 
 app.get('/announcement', getAnnouncement,(req,res)=>{
     if(req.session.loggedin) {
-        let sql = `SELECT class_id, announcement_title, announcement_body, announcement_date from announcement where class_id IN (${req.session.announcements})`;
+        let sql = `SELECT class_id, announcement_title, announcement_body, announcement_date from announcement where class_id IN (${req.session.classes})`;
         database.query(sql,(err,result)=>{
             if(!err){
                 console.log(result);
@@ -464,9 +523,18 @@ app.get("/class/:id/:section/students",(req,res)=>{
 
 
 
-app.get('/schedule', (req,res)=>{
+app.get('/schedule',getAnnouncement, (req,res)=>{
     if(req.session.loggedin) {
-        res.render('schedule'); 
+        let sql = `SELECT class_id, section, schedule_name, schedule_date FROM schedule WHERE class_id IN (${req.session.classes})`;
+        database.query(sql,(err,result)=>{
+            if(!err){
+                console.log(result);
+                res.render("schedule", {schedules:result});
+            }
+            else{
+                throw err;
+            }
+        });
     }
     else{
         res.send('Please log in to view the page');
