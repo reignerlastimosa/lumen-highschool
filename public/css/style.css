@@ -416,6 +416,28 @@ li:hover{
    
 }
 
+#edit_button{
+   text-align: center;
+   width:75px;
+   height:30px;
+   border:none;
+   background-color: #3B778A;
+   color:white;
+   border-radius: 5px;
+}
+
+#delete_button{
+    text-align: center;
+    width:75px;
+    height:30px;
+    border:none;
+    background-color: #3B778A;
+    color:white;
+    border-radius: 5px;
+ }
+
+
+
 
 
 
