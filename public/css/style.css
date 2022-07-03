@@ -283,6 +283,13 @@ ul li {
     height:40px;
 }
 
+#search_button{
+    font-weight: bold;
+    background-color: #3B778A;
+    color:white;
+    
+}
+
 
 #class_button{
     margin-top:70px;

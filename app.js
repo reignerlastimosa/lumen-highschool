@@ -52,19 +52,6 @@ app.get("/create-lumen-db",(req,res)=>{
 });
 
 
-app.get("/create-student-table",(req,res)=>{
-    let sql = "CREATE TABLE student(id int AUTO_INCREMENT, firstname varchar(50), lastname varchar(50), yearsec varchar(50), academicyear varchar(50), class varchar(50), grade varchar(50), PRIMARY KEY(id))";
-    database.query(sql,(err,result)=>{
-        if(!err){
-            res.send("successfulyl created  student table");
-        }
-        else{
-            res.send("failed to create student table");
-        }
-    });
-});
-
-
 app.get("/create-account-table",(req,res)=>{
     let sql="CREATE TABLE account(id int AUTO_INCREMENT, username varchar(50), password varchar(50), firstname varchar (50), lastname varchar (50), birthday date, role varchar(50), PRIMARY KEY (id))";
     database.query(sql,(err,result)=>{
@@ -129,21 +116,6 @@ app.get("/create-grades-table",(req,res)=>{
         }
     })
 });
-
-
-app.get("/insert-grades",(req,res)=>{
-    let sql = `INSERT INTO grades(account_id,firstname,lastname,class_id,section, activity_name, activity_grade) VALUES(2, "Ellah", "Chua", "STATS101", "3ISB", "Homework 1", 90)`;
-
-
-    database.query(sql,(err,result)=>{
-        if(!err){
-            res.send("successfully inserted new grades");
-        }
-        else{
-           throw err;
-        }
-    })
-})
 
 
 app.get("/create-schedule-table",(req,res)=>{
@@ -281,40 +253,50 @@ app.post('/login', (req,res)=>{
     });
 });
 
-app.post('/add-student',(req,res)=>{
-    
-    var firstname = req.body.firstname;
-    var lastname = req.body.lastname;
-    var occupation = req.body.occupation;
-    var address = req.body.address;
-    var sex = req.body.sex;
-    var age = req.body.age;
+
+app.get("/insert-grades",(req,res)=>{
+    let sql = `INSERT INTO grades(account_id,firstname,lastname,class_id,section, activity_name, activity_grade) VALUES(3, "Catherine", "Bautista", "MATH101", "3ISC", "Homework 2", 92)`;
 
 
-    var sql = `INSERT INTO student (firstname, lastname, yearsec, academicyear, class) VALUES ("${firstname}", "${lastname}", "${yearsec}","${academicyear}", "${classname}")`;
     database.query(sql,(err,result)=>{
-        if (!err){
-            console.log("successfully inserted new record");
-            res.redirect('/add-student');
+        if(!err){
+            res.send("successfully inserted new grades");
+        }
+        else{
+           throw err;
+        }
+    });
+});
+
+app.post('/search_grades',(req,res)=>{
+
+    let search = req.body.search;
+
+    database.query('SELECT * FROM grades WHERE firstname LIKE ? OR lastname LIKE ?', ['%'+search+'%', '%'+search+'%'], (err,result)=>{
+        if(!err){
+            console.log("successfully searched student grade");
+            res.render("grades",{students:result})
+
         }
         else{
             throw err;
         }
     });
-  
-  
 });
 
 
 
-
-
 app.post('/edit_grades',(req,res)=>{
-    var firstname = req.body.firstname;
-    var lastname = req.body.lastname;
-    var grades = req.body.grades;
+    let account_id = req.body.hidden;
+    let firstname = req.body.firstname;
+    let lastname = req.body.lastname;
+    let class_id = req.body.class;
+    let section = req.body.section;
+    let activity = req.body.activity;
+    let grades = req.body.grades;
 
-    var sql = `UPDATE student SET grade ="${grades}" where firstname = "${firstname}" AND lastname = "${lastname}"`;
+    let sql = `UPDATE grades SET firstname ="${firstname}", lastname = "${lastname}", class_id = "${class_id}", section = "${section}", activity_name = "${activity}", activity_grade = "${grades}" where account_id = "${account_id}"`;
+
     database.query(sql,(err,result)=>{
         if(!err){
             console.log("successfully updated student grade");
@@ -325,6 +307,20 @@ app.post('/edit_grades',(req,res)=>{
         }
     });
   
+});
+
+app.post('/delete_grades',(req,res)=>{
+    let account_id = req.body.hidden;
+
+    database.query('DELETE FROM grades WHERE account_id = ?', account_id, (err,result)=>{
+        if(!err){
+            console.log("successfully deleted student grade");
+            res.redirect("grades");
+        }
+        else{
+            throw err;
+        }
+    });
 });
 
 app.post('/edit_account',(req,res)=>{
