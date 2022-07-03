@@ -201,6 +201,8 @@ ul li {
 
 
 
+
+
 #lesson_main{
     margin-left:300px;
     
@@ -314,6 +316,17 @@ ul li {
         color:white;
         border:none;
 }
+
+
+#add_schedule_button{
+    background-color: #3B778A;
+    width:100px;
+    height:40px;
+    border-radius: 5px;
+    color:white;
+    border:none;
+}
+
 #edit_grades{
     background-color: #3B778A;
     width:70px;

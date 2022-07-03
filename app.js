@@ -521,7 +521,7 @@ app.get("/class/:id/:section/students",(req,res)=>{
 
 app.get('/schedule',getAnnouncement, (req,res)=>{
     if(req.session.loggedin) {
-        let sql = `SELECT class_id, section, schedule_name, schedule_date FROM schedule WHERE class_id IN (${req.session.classes})`;
+        let sql = `SELECT * FROM schedule WHERE class_id IN (${req.session.classes})`;
         database.query(sql,(err,result)=>{
             if(!err){
                 console.log(result);
@@ -536,6 +536,39 @@ app.get('/schedule',getAnnouncement, (req,res)=>{
         res.send('Please log in to view the page');
     }
   
+});
+
+
+app.post('/add_schedule',(req,res)=>{
+
+    let class_id = req.body.class;
+    let section = req.body.section;
+    let schedule_name = req.body.activity;
+    let schedule_date = req.body.schedule;
+    let sql = `INSERT INTO schedule (class_id, section, schedule_name, schedule_date) VALUES("${class_id}", "${section}", "${schedule_name}", "${schedule_date}")`;
+
+    database.query(sql,(err,result)=>{
+        if(!err){
+            console.log("inserted new schedule");
+            res.redirect("schedule");
+        }
+        else{
+            throw err;
+        }
+    });
+});
+
+
+app.post('/delete_schedule',(req,res)=>{
+    database.query('DELETE FROM schedule WHERE schedule_id = ?', req.body.hidden,(err,result)=>{
+        if(!err){
+            console.log("successfully deleted schedule");
+            res.redirect("schedule");
+        }
+        else{
+            throw err;
+        }
+    });
 });
 
 
