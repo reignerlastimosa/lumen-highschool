@@ -49,9 +49,42 @@
     <section id="profile_main" class="d-flex justify-content-center align-items-center">
       
         <div class ="profile-pic">
-          <img src="" alt="" id="photo">
-          <input type="file" id="file">
-          <label for="file" id="uploadBtn"> Choose Photo</label>
+          <img src="<%=image%>" width=200px, height=200px, alt="" id="photo">
+          
+          <label for="file" id="uploadBtn" data-bs-toggle="modal" data-bs-target="#profile_pic"> Update Photo</label>
+          <div class="modal fade" id="profile_pic">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                  
+                  <form method ="POST" action="/upload_image" enctype = "multipart/form-data">
+                      
+      
+            
+                      <div class="mb-3">
+                        <label for="" class="col-form-label"> Profile Pic</label>
+                        <input type="file" class="form-control" id="" name="image" >
+      
+                      </div>
+      
+                      
+      
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        
+                        <input type="submit" name ="" class="btn btn-secondary" value="Submit"> 
+                      </div>
+                    </form>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+            </div>
         </div>
       
 

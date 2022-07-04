@@ -4,6 +4,7 @@ const getData = require('./getData');
 const session = require('express-session');
 const { request } = require('express');
 const app = express();
+const multer = require('multer');
 const PORT = process.env.PORT || 26;
 
 
@@ -25,15 +26,29 @@ app.use(session({
 app.use(express.json());
 
 app.use(express.urlencoded());
-
+app.use(express.static('images'));
 app.use(express.static('public'));
-app.use('/style',express.static(__dirname + 'public/style'));
-app.use('/script',express.static(__dirname + 'public/script'));
-app.use('/img',express.static(__dirname + 'public/img'));
+
+
+
+
+
 
 app.set('views', __dirname + '/public/views');
 
 app.set('view engine', 'ejs');
+
+
+const fileStorageEngine = multer.diskStorage({
+    destination: (req,file,cb)=>{
+        cb(null, './images')
+    },
+    filename: (req,file,cb)=>{
+        cb(null, Date.now() + '_' + file.originalname)
+    },
+})
+
+const upload = multer({storage: fileStorageEngine})
 
 
 
@@ -253,6 +268,23 @@ app.post('/login', (req,res)=>{
     });
 });
 
+
+app.post('/upload_image', upload.single('image'),(req,res)=>{
+    console.log(req.file);
+    
+    let sql = `UPDATE account SET image = "${req.file.filename}" WHERE id=${req.session.account_id}`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            console.log("image successfully uploaded");
+            res.redirect("index");
+        }
+        else{
+            throw err;
+        }
+    });
+});
+
+
 app.get('/grades/:class',(req,res)=>{
 
     database.query(`SELECT * FROM grades WHERE class_id = ?`,req.params.class,(err,result)=>{
@@ -374,10 +406,10 @@ app.get('/index', (req,res)=>{
     if(req.session.loggedin) {
 
 
-        let sql = `SELECT id, firstname, lastname, birthday from account WHERE username = "${req.session.username}" AND password = "${req.session.password}"`;
+        let sql = `SELECT * from account WHERE username = "${req.session.username}" AND password = "${req.session.password}"`;
         database.query(sql,(err,result)=>{
             if(!err){ 
-            res.render('index', { email : req.session.username, password: req.session.password, id: result[0].id, firstname: result[0].firstname, lastname: result[0].lastname, birthday: result[0].birthday });
+            res.render('index', { email : req.session.username, password: req.session.password, id: result[0].id, firstname: result[0].firstname, lastname: result[0].lastname, birthday: result[0].birthday, image:result[0].image });
                 
                
             }
