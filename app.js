@@ -253,6 +253,19 @@ app.post('/login', (req,res)=>{
     });
 });
 
+app.get('/grades/:class',(req,res)=>{
+
+    database.query(`SELECT * FROM grades WHERE class_id = ?`,req.params.class,(err,result)=>{
+      if(!err){
+          console.log("filtered schedule by section");
+          res.render('grades', {students:result});
+      }
+      else{
+          throw err;
+      }
+    });
+  
+  });
 
 app.get("/insert-grades",(req,res)=>{
     let sql = `INSERT INTO grades(account_id,firstname,lastname,class_id,section, activity_name, activity_grade) VALUES(3, "Catherine", "Bautista", "MATH101", "3ISC", "Homework 2", 92)`;
@@ -570,6 +583,35 @@ app.post('/delete_schedule',(req,res)=>{
         }
     });
 });
+
+app.get('/schedule/section/:section',(req,res)=>{
+
+  database.query(`SELECT * FROM schedule WHERE section = ?`,req.params.section,(err,result)=>{
+    if(!err){
+        console.log("filtered schedule by section");
+        res.render('schedule', {schedules:result});
+    }
+    else{
+        throw err;
+    }
+  });
+
+});
+
+
+app.get('/schedule/class/:class',(req,res)=>{
+
+    database.query(`SELECT * FROM schedule WHERE class_id = ?`,req.params.class,(err,result)=>{
+      if(!err){
+          console.log("filtered schedule by section");
+          res.render('schedule', {schedules:result});
+      }
+      else{
+          throw err;
+      }
+    });
+  
+  });
 
 
 app.listen(PORT, ()=>{

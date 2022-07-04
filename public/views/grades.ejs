@@ -54,12 +54,16 @@
     
             <div id="grades_function">   
                 <label for=""> Filter</label>
-            <select  name="filter_grades" id="filter_grades">
+
+
+                
+            <select  name="filter_grades" id="filter_grades" onchange="location = '/grades/' + this.options[this.selectedIndex].value; ">
                
-                <option value="class1">2021</option>
-                <option value="class2">2022</option>
-                <option value="class3">2023</option>
-                <option value="class4">2024</option>
+                <option hidden>Select Class</option>
+                <option value="MATH101">MATH101</option>
+                <option value="ENGLISH101">ENGLISH101</option>
+                <option value="STATS101">STATS101</option>
+                <option value="SCIENCE101">SCIENCE101</option>
               </select>
 
              
