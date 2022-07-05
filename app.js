@@ -68,7 +68,7 @@ app.get("/create-lumen-db",(req,res)=>{
 
 
 app.get("/create-account-table",(req,res)=>{
-    let sql="CREATE TABLE account(id int AUTO_INCREMENT, username varchar(50), password varchar(50), firstname varchar (50), lastname varchar (50), birthday date, role varchar(50), PRIMARY KEY (id))";
+    let sql="CREATE TABLE account(id int AUTO_INCREMENT, username varchar(50), password varchar(50), firstname varchar (50), lastname varchar (50), birthday date, role varchar(50), image varchar(100),PRIMARY KEY (id))";
     database.query(sql,(err,result)=>{
         if(!err){
             res.send("successfully created account table");
