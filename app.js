@@ -28,6 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.static('images'));
 app.use(express.static('public'));
+app.use(express.static('files'));
 
 
 
@@ -46,10 +47,20 @@ const fileStorageEngine = multer.diskStorage({
     filename: (req,file,cb)=>{
         cb(null, Date.now() + '_' + file.originalname)
     },
-})
+});
+
+
+const lessonFiles = multer.diskStorage({
+    destination:(req,file,cb)=>{
+        cb(null,'./files');
+    },
+    filename:(req,file,cb)=>{
+        cb(null, Date.now() + '_' + file.originalname)
+    },
+});
 
 const upload = multer({storage: fileStorageEngine})
-
+const document = multer({storage: lessonFiles})
 
 
 
@@ -187,6 +198,32 @@ app.get("/create-announcement-table",(req,res)=>{
     });
 });
 
+
+app.get("/create-file-table",(req,res)=>{
+    let sql = "CREATE TABLE file (file_id int AUTO_INCREMENT, lesson_id int, lesson_name varchar(50),filename varchar(100), PRIMARY KEY (file_id), FOREIGN KEY (lesson_id) REFERENCES lesson(lesson_id))";
+
+    database.query(sql,(err,result)=>{
+        if(!err){
+            res.send("Successfully created file table");
+        }
+        else{
+            throw err;
+        }
+    });
+});
+
+
+app.get("/insert-file",(req,res)=>{
+    let sql =`INSERT INTO file(lesson_id, lesson_name,filename) VALUES("${req.params.lesson_id}","SELECT lesson_name from lesson WHERE lesson_id=${req.params.lesson_id}", "Recalling Mean, median and mode","${req.params.section}")`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            console.log("successfully inserted new lesson");
+        }
+        else{
+            throw err;
+        }
+    });
+});
 
 
 
@@ -517,7 +554,7 @@ app.get('/class', (req,res)=>{
 
 
 app.get('/class/:id/:section', (req,res)=>{
-    let sql =`SELECT lesson_name, lesson_description FROM lesson WHERE class_id = "${req.params.id}" AND section = "${req.params.section}"`;
+    let sql =`SELECT * FROM lesson WHERE class_id = "${req.params.id}" AND section = "${req.params.section}"`;
     database.query(sql,(err,result)=>{
         if(!err){
             
@@ -644,6 +681,87 @@ app.get('/schedule/class/:class',(req,res)=>{
     });
   
   });
+
+
+
+
+  app.get("/class/:id/:section/:lesson_id",(req,res)=>{
+    let sql = `SELECT * from file WHERE lesson_id=${req.params.lesson_id}`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            console.log(result);
+            res.render("file", {title:req.params.id,files:result, section:req.params.section, lesson_id: req.params.lesson_id})
+        }
+        else{
+            throw err;
+        }
+    });
+});
+
+app.get('/class/:id/:section/:lesson_id/:file_id',(req,res)=>{
+    
+    console.log(req.params.file_id);
+    let sql = `SELECT filename FROM file WHERE file_id = ${req.params['file_id']}`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            
+           res.render('fileview', {title:req.params.id,section:req.params.section, filename:result});
+        }
+        else{
+            throw err;
+        }
+        
+    });
+});
+
+
+app.post('/class/:id/:section/:lesson_id/upload_file', document.single('file'),(req,res)=>{
+    console.log(req.file);
+    
+    let sql = `INSERT INTO file (lesson_id, filename) VALUES(${req.body.lesson_id},"${req.file.filename}")`
+    database.query(sql,(err,result)=>{
+        if(!err){
+            console.log("file successfully uploaded");
+            res.redirect(`/class/${req.params.id}/${req.params.section}/${req.params.lesson_id}`);
+            
+        }
+        else{
+            throw err;
+        }
+    });
+});
+
+app.post('/class/:id/:section/:lesson_id/edit_upload_file', document.single('file'),(req,res)=>{
+    console.log(req.file);
+    
+    let sql = `UPDATE file SET filename = "${req.file.filename}" WHERE file_id=${req.body.file_id}`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            console.log("file successfully edited");
+            res.redirect(`/class/${req.params.id}/${req.params.section}/${req.params.lesson_id}`);
+        }
+        else{
+            throw err;
+        }
+    });
+});
+
+
+app.post('/class/:id/:section/:lesson_id/delete_upload_file', document.single('file'),(req,res)=>{
+    console.log(req.file);
+    
+    let sql = `DELETE FROM file WHERE file_id=${req.body.file_id}`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            console.log("file successfully deleted");
+            res.redirect(`/class/${req.params.id}/${req.params.section}/${req.params.lesson_id}`);
+        }
+        else{
+            throw err;
+        }
+    });
+});
+
 
 
 app.listen(PORT, ()=>{

@@ -218,6 +218,39 @@ ul li {
    
 }
 
+
+#file_main{
+    margin-left:300px;
+    
+    height:100vh;
+    background-color: #F5F5F5;
+}
+
+#fileview_main{
+    margin-left:300px;
+    
+    height:100vh;
+    background-color: #F5F5F5;
+}
+
+#file_main section{
+    background-color: white;
+    height:150x;
+    border-radius: 5px;
+    width:95%;
+    
+   
+}
+
+#file_edit_button{
+    background-color: #3B778A;
+    width:80px;
+    height:35px;
+    border-radius: 5px;
+    color:white;
+    border:none;
+}
+
 #home{
 margin-left:100px;
 

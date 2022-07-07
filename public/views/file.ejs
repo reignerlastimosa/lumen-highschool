@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+    <title>Lesson</title>
+</head>
+<body>
+    
+    <section id="lesson_header" class="d-flex align-items-center justify-content-between"> 
+        <button id="home"> <a href="/index">   <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+            <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+          </svg> </a></button> 
+        <h2><%= title %></h2>
+    </section>
+    
+    <div>
+        <nav id="lesson_nav">
+            <h3 class="m-4"><%= title %></h3>
+            <ul>
+                <a href=""> <li class="class_active"> Lessons</li></a>
+                <a href="/class/<%=title%>/<%=section%>/announcement_class"> <li> Announcement</li></a>
+                <a href="/class/<%=title%>/<%=section%>/students"> <li> Students</li></a>
+                
+            </ul>
+        </nav>
+
+        <div id="file_main" class="d-flex align-items-center flex-column">
+            <div id="lesson_buttons" class="m-4">
+                <button data-bs-toggle="modal" data-bs-target="#upload_file">Upload </button>
+                
+                <div class="modal fade" id="upload_file">
+
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Upload File</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div class="modal-body">
+                        
+                        <form method ="POST" action="/class/<%=title%>/<%=section%>/<%=lesson_id%>/upload_file" enctype = "multipart/form-data">
+                            
+            
+                  
+                            <div class="mb-3">
+                              <label for="" class="col-form-label"> Upload File</label>
+                              <input type="hidden" class="form-control" id="" name="lesson_id" value="<%=lesson_id%>">
+                              <input type="file" class="form-control" id="" name="file" >
+                              
+                            </div>
+            
+                            
+            
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                              
+                              <input type="submit" name ="" class="btn btn-secondary" value="Submit"> 
+                            </div>
+                          </form>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+                   
+            </div>
+
+            <% files.forEach((file)=> { %>
+            <section class="m-1 d-flex justify-content-between align-items-center"> 
+               <a href="/class/<%=title%>/<%=section%>/<%=lesson_id%>/<%=file.file_id%>">  <h5 class="m-4"><%=file.filename%></h2> </a> 
+                  <div>   
+                  <button class ="m-3" data-bs-toggle="modal" data-bs-target="#edit_upload_file<%=file.file_id%>" id="file_edit_button">Edit</button>
+
+                  <button class ="m-3" data-bs-toggle="modal" data-bs-target="#delete_upload_file<%=file.file_id%>" id="file_edit_button">Delete</button>
+                </div>
+                    <div class="modal fade" id="edit_upload_file<%=file.file_id%>">
+
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Edit Upload File</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                              
+                              <form method ="POST" action="/class/<%=title%>/<%=section%>/<%=lesson_id%>/edit_upload_file" enctype = "multipart/form-data">
+                                  
+                  
+                        
+                                  <div class="mb-3">
+                                    <label for="" class="col-form-label"> Edit Upload File</label>
+                                    <input type="hidden" class="form-control" id="" name="file_id" value=<%= file.file_id%>>
+                                    <input type="file" class="form-control" id="" name="file" >
+                                    
+                                  </div>
+                  
+                                  
+                  
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                    
+                                    <input type="submit" name ="" class="btn btn-secondary" value="Submit"> 
+                                  </div>
+                                </form>
+                            </div>
+                            
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="modal fade" id="delete_upload_file<%=file.file_id%>">
+
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Delete Upload File</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                              
+                              <form method ="POST" action="/class/<%=title%>/<%=section%>/<%=lesson_id%>/delete_upload_file" enctype = "multipart/form-data">
+                                  
+                  
+                        
+                                  <div class="mb-3">
+                                    
+                                    <input type="hidden" class="form-control" id="" name="file_id" value=<%= file.file_id%>>
+                                    <label for="" class="col-form-label"> Are you sure you want to delete this file?</label>
+                                    
+                                  </div>
+                  
+                                  
+                  
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                    
+                                    <input type="submit" name ="" class="btn btn-secondary" value="Submit"> 
+                                  </div>
+                                </form>
+                            </div>
+                            
+                          </div>
+                        </div>
+                      </div>
+          
+            </section>
+            <%}) %>
+           
+        </div>
+    </div>
+
+
+    
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</body>
+</html>
