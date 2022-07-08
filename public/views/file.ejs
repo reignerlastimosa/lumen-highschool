@@ -72,13 +72,13 @@
 
             <% files.forEach((file)=> { %>
             <section class="m-1 d-flex justify-content-between align-items-center"> 
-               <a href="/class/<%=title%>/<%=section%>/<%=lesson_id%>/<%=file.file_id%>">  <h5 class="m-4"><%=file.filename%></h2> </a> 
+               <a href="/class/<%=title%>/<%=section%>/<%=lesson_id%>/<%=file.filename%>">  <h5 class="m-4"><%=file.filename%></h2> </a> 
                   <div>   
-                  <button class ="m-3" data-bs-toggle="modal" data-bs-target="#edit_upload_file<%=file.file_id%>" id="file_edit_button">Edit</button>
+                  <button class ="m-3" data-bs-toggle="modal" data-bs-target="#edit<%=file.file_id%>" id="file_edit_button">Edit</button>
 
-                  <button class ="m-3" data-bs-toggle="modal" data-bs-target="#delete_upload_file<%=file.file_id%>" id="file_edit_button">Delete</button>
+                  <button class ="m-3" data-bs-toggle="modal" data-bs-target="#delete<%=file.file_id%>" id="file_edit_button">Delete</button>
                 </div>
-                    <div class="modal fade" id="edit_upload_file<%=file.file_id%>">
+                    <div class="modal fade" id="edit<%=file.file_id%>">
 
                         <div class="modal-dialog">
                           <div class="modal-content">
@@ -114,7 +114,7 @@
                       </div>
 
 
-                      <div class="modal fade" id="delete_upload_file<%=file.file_id%>">
+                      <div class="modal fade" id="delete<%=file.file_id%>">
 
                         <div class="modal-dialog">
                           <div class="modal-content">

@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.static('images'));
 app.use(express.static('public'));
-app.use(express.static('files'));
+
 
 
 
@@ -52,7 +52,7 @@ const fileStorageEngine = multer.diskStorage({
 
 const lessonFiles = multer.diskStorage({
     destination:(req,file,cb)=>{
-        cb(null,'./files');
+        cb(null,'./public/files');
     },
     filename:(req,file,cb)=>{
         cb(null, Date.now() + '_' + file.originalname)
@@ -200,7 +200,7 @@ app.get("/create-announcement-table",(req,res)=>{
 
 
 app.get("/create-file-table",(req,res)=>{
-    let sql = "CREATE TABLE file (file_id int AUTO_INCREMENT, lesson_id int, lesson_name varchar(50),filename varchar(100), PRIMARY KEY (file_id), FOREIGN KEY (lesson_id) REFERENCES lesson(lesson_id))";
+    let sql = "CREATE TABLE file (file_id int AUTO_INCREMENT, lesson_id int, lesson_name varchar(50), filename varchar(100), PRIMARY KEY (file_id), FOREIGN KEY (lesson_id) REFERENCES lesson(lesson_id))";
 
     database.query(sql,(err,result)=>{
         if(!err){
@@ -698,14 +698,16 @@ app.get('/schedule/class/:class',(req,res)=>{
     });
 });
 
-app.get('/class/:id/:section/:lesson_id/:file_id',(req,res)=>{
+app.get('/class/:id/:section/:lesson_id/:filename',(req,res)=>{  
+
     
-    console.log(req.params.file_id);
-    let sql = `SELECT filename FROM file WHERE file_id = ${req.params['file_id']}`;
+
+    
+    let sql = `SELECT * FROM file WHERE filename = "${req.params.filename}"`;
     database.query(sql,(err,result)=>{
         if(!err){
             
-           res.render('fileview', {title:req.params.id,section:req.params.section, filename:result});
+           res.render('fileview', {title:req.params.id,section:req.params.section, files:result[0].filename});
         }
         else{
             throw err;
@@ -713,6 +715,13 @@ app.get('/class/:id/:section/:lesson_id/:file_id',(req,res)=>{
         
     });
 });
+
+
+
+
+
+
+
 
 
 app.post('/class/:id/:section/:lesson_id/upload_file', document.single('file'),(req,res)=>{
