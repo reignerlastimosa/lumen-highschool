@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+    <title>lesson</title>
+</head>
+<body>
+    
+    <section id="lesson_header" class="d-flex align-items-center justify-content-between"> 
+        <button id="home"> <a href="/index">   <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+            <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+          </svg> </a></button> 
+        <h2><%= title %></h2>
+    </section>
+    
+    <div>
+        <nav id="lesson_nav">
+            <h3 class="m-4"><%= title %></h3>
+            <ul>
+                <a href=""> <li class="class_active"> Lessons</li></a>
+                <a href="/class/<%=title%>/<%=section%>/announcement_class"> <li> Announcement</li></a>
+                <a href="/class/<%=title%>/<%=section%>/students"> <li> Students</li></a>
+                
+            </ul>
+        </nav>
+
+        <div id="lesson_main" class="d-flex align-items-center flex-column">
+            <div id="lesson_buttons" class="m-4">
+                <button data-bs-toggle = "modal" data-bs-target = "#create_lesson">Create</button>
+                
+            </div>
+
+            <% lessons.forEach((les)=> { %>
+            <section class="m-3"> <a href="/class/<%=les.class_id%>/<%=les.section%>/<%=les.lesson_id%>">
+                <h2 class="m-4"><%=les.lesson_name%></h2>
+                <p class="m-4"><%=les.lesson_description%></p>
+            </a>
+            
+            <button data-bs-toggle = "modal" data-bs-target="#edit<%=les.lesson_id%>">Edit</button>
+            <button>Delete</button>
+            
+            
+            
+            </section>
+            <%}) %>
+           
+        </div>
+    </div>
+
+
+    
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</body>
+</html>
