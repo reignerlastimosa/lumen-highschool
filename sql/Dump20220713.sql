@@ -30,8 +30,9 @@ CREATE TABLE `account` (
   `lastname` varchar(50) DEFAULT NULL,
   `birthday` date DEFAULT NULL,
   `image` varchar(100) DEFAULT NULL,
+  `role` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +41,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,'reignerlastimosa@gmail.com','123','Robert','Lastimosa','2000-09-26','1656950303522_reigner.jpg'),(2,'ellahchua@gmail.com','123','Ellah','Chua','2000-06-24',NULL),(3,'catherinebautista@gmail.com','123','Catherine','Bautista','2000-03-12',NULL);
+INSERT INTO `account` VALUES (1,'reignerlastimosa@gmail.com','123','Robert','Lastimosa','2000-09-26','1657453258314_andrei1.jpg','admin'),(2,'ellahchua@gmail.com','123','Ellah','Chua','2000-06-24',NULL,'student'),(3,'catherinebautista@gmail.com','123','Catherine','Bautista','2000-03-12',NULL,'student'),(6,'karlsolmiano@gmail.com','123','Karl','Solmiano','2000-06-18',NULL,'student'),(7,'jeromevelasquez@gmail.com','123','Jerome','Velasquez','2001-02-06',NULL,'student'),(8,'justinecerezo@gmail.com','123','Justin','Cerezo','2001-08-12',NULL,'student'),(9,'arthtibay@gmail.com','123','Arth','Tibay','2001-10-21',NULL,'student'),(10,'albertmaglines@gmail.com','123','Albert','Maglines','2002-06-23',NULL,'student'),(11,'stephaniechua@gmail.com','123','Stephanie','Chua','2001-02-14',NULL,'student');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,10 +83,7 @@ DROP TABLE IF EXISTS `class`;
 CREATE TABLE `class` (
   `class_id` varchar(50) DEFAULT NULL,
   `account_id` int DEFAULT NULL,
-  `firstname` varchar(50) DEFAULT NULL,
-  `lastname` varchar(50) DEFAULT NULL,
   `section` varchar(50) DEFAULT NULL,
-  `year_level` int DEFAULT NULL,
   `grade` int DEFAULT NULL,
   `attendance` double DEFAULT NULL,
   KEY `account_id` (`account_id`),
@@ -99,7 +97,7 @@ CREATE TABLE `class` (
 
 LOCK TABLES `class` WRITE;
 /*!40000 ALTER TABLE `class` DISABLE KEYS */;
-INSERT INTO `class` VALUES ('ENGLISH101',2,'Ellah','Chua','3ISA',7,92,90),('MATH101',3,'Catherine','Bautista','3ISA',7,87,85),('STATS101',3,'Catherine','Bautista','3ISA',7,90,88),('STATS101',2,'Ellah','Chua','3ISA',7,85,88),('STATS101',1,'Reigner','Lastimosa','3ISA',7,87,83),('MATH101',1,'Reigner','Lastimosa','3ISA',7,84,80),('ENGLISH101',1,'Reigner','Lastimosa','3ISA',7,90,87);
+INSERT INTO `class` VALUES ('ENGLISH101',2,'3ISA',90,88),('MATH101',2,'3ISA',85,90),('STATS101',2,'3ISA',89,91),('SCIENCE101',2,'3ISA',92,93),('ENGLISH101',3,'3ISA',90,91),('MATH101',3,'3ISA',91,92),('STATS101',3,'3ISA',89,90),('ENGLISH101',6,'3ISA',90,85),('MATH101',6,'3ISA',86,89),('STATS101',6,'3ISA',87,86),('SCIENCE101',6,'3ISA',90,91),('ENGLISH101',7,'3ISA',90,91),('MATH101',7,'3ISA',86,90),('STATS101',7,'3ISA',88,92),('SCIENCE101',7,'3ISA',90,91),('ENGLISH101',8,'3ISC',94,100),('MATH101',8,'3ISC',89,92),('STATS101',8,'3ISC',90,95),('SCIENCE101',8,'3ISC',95,98),('ENGLISH101',9,'3ISB',92,96),('MATH101',9,'3ISB',85,88),('STATS101',9,'3ISB',87,90),('SCIENCE101',9,'3ISB',93,96),('ENGLISH101',10,'3ISB',90,97),('MATH101',10,'3ISB',88,95),('STATS101',10,'3ISB',86,92),('SCIENCE101',10,'3ISB',91,98),('ENGLISH101',11,'3ISC',95,100),('MATH101',11,'3ISC',84,92),('STATS101',11,'3ISC',88,95),('SCIENCE101',11,'3ISC',96,100),('STATS101',1,'3ISA',NULL,NULL),('STATS101',1,'3ISB',NULL,NULL),('STATS101',1,'3ISC',NULL,NULL),('ENGLISH101',1,'3ISA',NULL,NULL);
 /*!40000 ALTER TABLE `class` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,15 +138,15 @@ DROP TABLE IF EXISTS `grades`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `grades` (
   `account_id` int DEFAULT NULL,
-  `firstname` varchar(50) DEFAULT NULL,
-  `lastname` varchar(50) DEFAULT NULL,
+  `activity_id` int NOT NULL AUTO_INCREMENT,
   `class_id` varchar(50) DEFAULT NULL,
   `section` varchar(50) DEFAULT NULL,
   `activity_name` varchar(50) DEFAULT NULL,
   `activity_grade` int DEFAULT NULL,
+  PRIMARY KEY (`activity_id`),
   KEY `account_id` (`account_id`),
   CONSTRAINT `grades_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,7 +155,7 @@ CREATE TABLE `grades` (
 
 LOCK TABLES `grades` WRITE;
 /*!40000 ALTER TABLE `grades` DISABLE KEYS */;
-INSERT INTO `grades` VALUES (1,'Reigner','Lastimosa','ENGLISH101','3ISB','Homework 1',86),(2,'Ellah','Chua','STATS101','3ISB','Homework 1',90),(3,'Catherine','Bautista','MATH101','3ISC','Homework 2',92);
+INSERT INTO `grades` VALUES (2,1,'STATS101','3ISA','Homework #1',90),(2,2,'MATH101','3ISA','Assignment #1',95),(3,3,'STATS101','3ISA','Homework #1',93),(3,4,'MATH101','3ISA','Assignment #1',95),(3,5,'ENGLISH101','3ISA','Pecha Kucha',100),(6,7,'STATS101','3ISA','Homework #1',87);
 /*!40000 ALTER TABLE `grades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,4 +222,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-09  6:55:03
+-- Dump completed on 2022-07-13  8:19:21

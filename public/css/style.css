@@ -473,6 +473,24 @@ li:hover{
     height:150px;
 }
 
+#add_grades_button{
+    background-color: transparent;
+    color:#2A4D58;
+    width:120px;
+    height:35px;
+    padding-top:5px;
+    text-align: center;
+    
+    border:none;
+}
+
+
+
+#add_grades_button:hover{
+    text-decoration: underline;
+    font-weight: bold;
+}
+
 #grades h1{
     color:#2A4D58;
 }
@@ -484,6 +502,7 @@ li:hover{
 
 #grades_table{
     width:95%;
+    
    
 }
 
@@ -517,9 +536,15 @@ li:hover{
 
 
 
+section a{
+    color:#3B778A;
+}
 
-
-
+section a:hover{
+   
+    font-weight: bold;
+    color:#3B778A;
+}
 
 
 
