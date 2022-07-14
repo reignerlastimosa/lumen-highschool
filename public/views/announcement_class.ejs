@@ -32,8 +32,51 @@
 
         <div id="lesson_main" class="d-flex align-items-center flex-column">
             <div id="lesson_buttons" class="m-4">
-                <button>Add</button>
-                <button>Edit</button>
+                <button data-bs-toggle = "modal" data-bs-target = "#add_new_schedule">Add</button>
+
+                <div class="modal fade" id="add_new_schedule">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Add Announcement</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          
+                          <form method ="POST" action="/class/<%=title%>/<%=section%>/announcement_class/add">
+                              <div class="mb-3">
+                                <label for="title" class="col-form-label"> Title</label>
+                                
+                                <input type="text" class="form-control" id="" name="announcement_title">
+                                
+                              </div>
+  
+                              <div class="mb-3">
+                                <label for="body" class="col-form-label"> Body</label>
+                                <textarea class="form-control" id="message-text" name="announcement_body"></textarea>
+            
+                              </div>
+  
+                              <div class="mb-3">
+                                <label for="date" class="col-form-label"> Date</label>
+                                <input type="date" class="form-control" id="" name="announcement_date">
+            
+                              </div>
+  
+                             
+  
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                
+                                <input type="submit" name ="grades_edit" class="btn btn-secondary" value="Ok"> 
+                              </div>
+                            </form>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                
                 
             </div>
 
@@ -42,6 +85,80 @@
                 <h2 class="m-4"><%=ann.announcement_title%></h2>
                 <h5 class="m-4"><%=ann.announcement_date%></h2>
                 <p class="m-4"><%=ann.announcement_body%></p>
+                <button data-bs-toggle="modal" data-bs-target="#edit_announcement<%=ann.announcement_id%>">Edit</button>
+                <button data-bs-toggle="modal" data-bs-target="#delete_announcement<%=ann.announcement_id%>">Delete</button>
+                <div class="modal fade" id="edit_announcement<%=ann.announcement_id%>">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Edit Announcement</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          
+                          <form method ="POST" action="/class/<%=title%>/<%=section%>/announcement_class/edit">
+                              <div class="mb-3">
+                                <label for="title" class="col-form-label"> Title</label>
+                                <input type="hidden" class="form-control" id="" name="announcement_id" value="<%= ann.announcement_id %>">
+                                <input type="text" class="form-control" id="" name="announcement_title" value="<%=ann.announcement_title%>">
+                                
+                              </div>
+  
+                              <div class="mb-3">
+                                <label for="body" class="col-form-label"> Body</label>
+                                <textarea class="form-control" id="message-text" name="announcement_body"><%=ann.announcement_body%></textarea>
+            
+                              </div>
+  
+                              <div class="mb-3">
+                                <label for="date" class="col-form-label"> Date</label>
+                                <input type="date" class="form-control" id="" name="announcement_date" value="<%= ann.announcement_date %>">
+            
+                              </div>
+  
+                             
+  
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                
+                                <input type="submit" name ="grades_edit" class="btn btn-secondary" value="Ok"> 
+                              </div>
+                            </form>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="modal fade" id="delete_announcement<%=ann.announcement_id%>">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Delete Announcement</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          
+                          <form method ="POST" action="/class/<%=title%>/<%=section%>/announcement_class/delete">
+                              <div class="mb-3">
+                                <label for="validation" class="col-form-label"> Are you sure you want to delete <%=ann.announcement_title%> announcement?</label>
+                                <input type="hidden" class="form-control" id="" name="announcement_id" value="<%= ann.announcement_id %>">
+                               
+                                
+                              </div>
+  
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                
+                                <input type="submit" name ="grades_edit" class="btn btn-secondary" value="Ok"> 
+                              </div>
+                            </form>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
             </section>
             <%}) %>
            

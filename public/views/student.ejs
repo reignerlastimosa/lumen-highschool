@@ -23,7 +23,7 @@
         <nav id="lesson_nav">
             <h3 class="m-4"><%= title %></h3>
             <ul>
-                <a href=""> <li> Lessons</li></a>
+                <a href="/class/<%=title%>/<%=section%>/"> <li> Lessons</li></a>
                 <a href="/class/<%=title%>/<%=section%>/announcement_class"> <li> Announcement</li></a>
                 <a href=""> <li  class="class_active"> Students</li></a>
                 
@@ -32,8 +32,40 @@
 
         <div id="lesson_main" class="d-flex align-items-center flex-column">
             <div id="lesson_buttons" class="m-4">
-                <button>Add</button>
-                <button>Edit</button>
+                <button data-bs-toggle = "modal" data-bs-target="#insert_class_student">Add </button>
+
+                  <div class="modal fade" id="insert_class_student">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Add Student</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          
+                          <form method ="POST" action="/class/<%=title%>/<%=section%>/students/add">
+                              <div class="mb-3">
+                                <label for="firstname" class="col-form-label"> Student I.D</label>
+                            
+                                <input type="text" class="form-control" id="" name="account_id">
+                                
+                              </div>
+  
+                             
+  
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                
+                                <input type="submit" name ="grades_edit" class="btn btn-secondary" value="Ok"> 
+                              </div>
+                            </form>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                
+                
                 
             </div>
 
@@ -60,6 +92,86 @@
                           
                                 
                           <td> <%= student.attendance %></td>
+                          <td> <button data-bs-toggle = "modal" data-bs-target="#edit_student<%= student.account_id %>">Edit</button> <button data-bs-toggle = "modal" data-bs-target="#delete_student<%= student.account_id %>"> Delete</button>
+                          
+                            <div class="modal fade" id="edit_student<%= student.account_id %>">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Edit Student</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    
+                                    <form method ="POST" action="/class/<%=title%>/<%=section%>/students/edit">
+                                        <div class="mb-3">
+                                          <label for="firstname" class="col-form-label"> Firstname</label>
+                                          <input type="hidden" class="form-control" id="" name="account_id" value="<%= student.account_id %>">
+                                          <input type="text" class="form-control" id="" name="firstname" value="<%= student.firstname %>" disabled>
+                                          
+                                        </div>
+            
+                                        <div class="mb-3">
+                                          <label for="lastname" class="col-form-label"> Lastname</label>
+                                          <input type="text" class="form-control" id="" name="lastname" value="<%= student.lastname %>" disabled>
+                      
+                                        </div>
+            
+                                        <div class="mb-3">
+                                          <label for="section" class="col-form-label"> Section</label>
+                                          <input type="text" class="form-control" id="" name="section" value="<%= student.section %>" disabled>
+                      
+                                        </div>
+            
+                                        <div class="mb-3">
+                                          <label for="attendance" class="col-form-label"> Attendance</label>
+                                          <input type="text" class="form-control" id="" name="attendance" value="<%= student.attendance %>">
+                                          
+                                        </div>
+            
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                          
+                                          <input type="submit" name ="grades_edit" class="btn btn-secondary" value="Ok"> 
+                                        </div>
+                                      </form>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+                            </div>
+                          
+                          
+                            <div class="modal fade" id="delete_student<%= student.account_id %>">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Remove Student</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    
+                                    <form method ="POST" action="/class/<%=title%>/<%=section%>/students/delete">
+                                        <div class="mb-3">
+                                          <label for="firstname" class="col-form-label"> Are you sure you want to remove <%= student.firstname %>?</label>
+                                          <input type="hidden" class="form-control" id="" name="account_id" value="<%= student.account_id %>">
+                                         
+                                          
+                                        </div>
+            
+                                      
+            
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                          
+                                          <input type="submit" name ="grades_edit" class="btn btn-secondary" value="Ok"> 
+                                        </div>
+                                      </form>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+                            </div></td>
                         </tr>
                        <%}) %>
                    

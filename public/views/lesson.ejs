@@ -34,6 +34,41 @@
             <div id="lesson_buttons" class="m-4">
                 <button data-bs-toggle = "modal" data-bs-target = "#create_lesson">Create</button>
                 
+                <div class="modal fade" id="create_lesson">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Create Lesson</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          
+                          <form method ="POST" action="/class/<%=title%>/<%=section%>/add-lesson">
+                              <div class="mb-3">
+                                <label for="title" class="col-form-label"> Lesson Name</label>
+                                
+                                <input type="text" class="form-control" id="" name="lesson_name">
+                                
+                              </div>
+  
+                              <div class="mb-3">
+                                <label for="body" class="col-form-label"> Description</label>
+                                <textarea class="form-control" id="message-text" name="lesson_description"></textarea>
+            
+                              </div>
+  
+                             
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                
+                                <input type="submit" name ="grades_edit" class="btn btn-secondary" value="Ok"> 
+                              </div>
+                            </form>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
             </div>
 
             <% lessons.forEach((les)=> { %>
@@ -42,8 +77,73 @@
                 <p class="m-4"><%=les.lesson_description%></p>
             </a>
             
-            <button data-bs-toggle = "modal" data-bs-target="#edit<%=les.lesson_id%>">Edit</button>
-            <button>Delete</button>
+            <button data-bs-toggle = "modal" data-bs-target="#edit_lesson<%=les.lesson_id%>">Edit</button>
+            <button data-bs-toggle = "modal" data-bs-target="#delete_lesson<%=les.lesson_id%>">Delete</button>
+
+            <div class="modal fade" id="edit_lesson<%=les.lesson_id%>">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Edit Lesson</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                      
+                      <form method ="POST" action="/class/<%=title%>/<%=section%>/edit-lesson">
+                          <div class="mb-3">
+                            <label for="lesson name" class="col-form-label"> Lesson Name</label>
+                            <input type="hidden" class="form-control" id="" name="lesson_id" value="<%=les.lesson_id%>">
+                            <input type="text" class="form-control" id="" name="lesson_name" value="<%=les.lesson_name%>">
+                            
+                          </div>
+
+                          <div class="mb-3">
+                            <label for="description" class="col-form-label"> Description</label>
+                            <textarea class="form-control" id="message-text" name="lesson_description"><%=les.lesson_description%></textarea>
+        
+                          </div>
+
+                         
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            
+                            <input type="submit" name ="grades_edit" class="btn btn-secondary" value="Ok"> 
+                          </div>
+                        </form>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal fade" id="delete_lesson<%=les.lesson_id%>">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Delete Lesson</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                      
+                      <form method ="POST" action="/class/<%=title%>/<%=section%>/delete-lesson">
+                          <div class="mb-3">
+                            <label for="validation" class="col-form-label"> Are you sure you want to delete <%=les.lesson_name%>?</label>
+                            <input type="hidden" class="form-control" id="" name="lesson_id" value="<%= les.lesson_id %>">
+                           
+                            
+                          </div>
+
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            
+                            <input type="submit" name ="grades_edit" class="btn btn-secondary" value="Ok"> 
+                          </div>
+                        </form>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
             
             
             

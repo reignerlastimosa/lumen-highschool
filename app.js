@@ -228,11 +228,38 @@ app.get("/insert-file",(req,res)=>{
 
 
 
-app.get("/class/:id/:section/add-lesson",(req,res)=>{
-    let sql =`INSERT INTO lesson(class_id, lesson_name, lesson_description, section) VALUES("${req.params.id}","MEASURE OF CENTRAL TENDENCY", "Recalling Mean, median and mode","${req.params.section}")`;
+app.post("/class/:id/:section/add-lesson",(req,res)=>{
+    let sql =`INSERT INTO lesson(class_id, lesson_name, lesson_description, section) VALUES("${req.params.id}","${req.body.lesson_name}", "${req.body.lesson_description}","${req.params.section}")`;
     database.query(sql,(err,result)=>{
         if(!err){
             console.log("successfully inserted new lesson");
+            res.redirect(`/class/${req.params.id}/${req.params.section}/`);
+        }
+        else{
+            throw err;
+        }
+    });
+});
+
+app.post("/class/:id/:section/edit-lesson",(req,res)=>{
+    let sql =`UPDATE lesson set lesson_name = "${req.body.lesson_name}", lesson_description = "${req.body.lesson_description}" where lesson_id = ${req.body.lesson_id}`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            console.log("successfully edited  lesson");
+            res.redirect(`/class/${req.params.id}/${req.params.section}/`);
+        }
+        else{
+            throw err;
+        }
+    });
+});
+
+app.post("/class/:id/:section/delete-lesson",(req,res)=>{
+    let sql =`DELETE from lesson where lesson_id = ${req.body.lesson_id}`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            console.log("successfully deleted lesson");
+            res.redirect(`/class/${req.params.id}/${req.params.section}/`);
         }
         else{
             throw err;
@@ -241,13 +268,44 @@ app.get("/class/:id/:section/add-lesson",(req,res)=>{
 });
 
 
-app.get("/class/:id/:section/add-announcement",(req,res)=>{
+app.post("/class/:id/:section/announcement_class/add",(req,res)=>{
     
 
-    let sql =`INSERT INTO announcement(class_id, announcement_title, announcement_body, announcement_date,section) VALUES("${req.params.id}","HOMEWORK #1", "Please answer your homework #1 at page 34.", "2022-06-29","${req.params.section}")`;
+    let sql =`INSERT INTO announcement(class_id, announcement_title, announcement_body, announcement_date,section) VALUES("${req.params.id}","${req.body.announcement_title}", "${req.body.announcement_body}", "${req.body.announcement_date}","${req.params.section}")`;
     database.query(sql,(err,result)=>{
         if(!err){
             console.log("successfully inserted new announcement");
+            res.redirect(`/class/${req.params.id}/${req.params.section}/announcement_class`);
+        }
+        else{
+            throw err;
+        }
+    });
+});
+
+app.post("/class/:id/:section/announcement_class/edit",(req,res)=>{
+    
+
+    let sql =`UPDATE announcement set announcement_title = "${req.body.announcement_title}", announcement_body = "${req.body.announcement_body}", announcement_date = "${req.body.announcement_date}" where announcement_id = ${req.body.announcement_id}`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            console.log("successfully edited announcement");
+            res.redirect(`/class/${req.params.id}/${req.params.section}/announcement_class`);
+        }
+        else{
+            throw err;
+        }
+    });
+});
+
+app.post("/class/:id/:section/announcement_class/delete",(req,res)=>{
+    
+
+    let sql =`DELETE FROM announcement where announcement_id = ${req.body.announcement_id}`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            console.log("successfully deleted announcement");
+            res.redirect(`/class/${req.params.id}/${req.params.section}/announcement_class`);
         }
         else{
             throw err;
@@ -637,7 +695,7 @@ function getAnnouncement(req,res,next){
 
 app.get('/announcement', getAnnouncement,(req,res)=>{
     if(req.session.loggedin) {
-        let sql = `SELECT class_id, announcement_title, announcement_body, announcement_date from announcement where class_id IN (${req.session.classes})`;
+        let sql = `SELECT * from announcement where class_id IN (${req.session.classes})`;
         database.query(sql,(err,result)=>{
             if(!err){
                 console.log(result);
@@ -658,7 +716,7 @@ app.get('/announcement', getAnnouncement,(req,res)=>{
 
 app.get('/student/announcement', getAnnouncement,(req,res)=>{
     if(req.session.loggedin) {
-        let sql = `SELECT class_id, announcement_title, announcement_body, announcement_date from announcement where class_id IN (${req.session.classes})`;
+        let sql = `SELECT * from announcement where class_id IN (${req.session.classes})`;
         database.query(sql,(err,result)=>{
             if(!err){
                 console.log(result);
@@ -755,7 +813,7 @@ app.get('/student/class/:id/:section', (req,res)=>{
 
 
 app.get('/class/:id/:section/announcement_class', (req,res)=>{
-    let sql =`SELECT announcement_title, announcement_body, announcement_date FROM announcement WHERE class_id = "${req.params.id}" AND section = "${req.params.section}"`;
+    let sql =`SELECT * from announcement WHERE class_id = "${req.params.id}" AND section = "${req.params.section}"`;
     database.query(sql,(err,result)=>{
         if(!err){
             
@@ -771,7 +829,7 @@ app.get('/class/:id/:section/announcement_class', (req,res)=>{
 });
 
 app.get('/student/class/:id/:section/announcement_class', (req,res)=>{
-    let sql =`SELECT announcement_title, announcement_body, announcement_date FROM announcement WHERE class_id = "${req.params.id}" AND section = "${req.params.section}"`;
+    let sql =`SELECT * from announcement WHERE class_id = "${req.params.id}" AND section = "${req.params.section}"`;
     database.query(sql,(err,result)=>{
         if(!err){
             
@@ -786,8 +844,50 @@ app.get('/student/class/:id/:section/announcement_class', (req,res)=>{
    
 });
 
+app.post('/class/:id/:section/students/add',(req,res)=>{
+
+    let sql=`INSERT INTO class(account_id, class_id, section) VALUES(${req.body.account_id},"${req.params.id}","${req.params.section}")`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            console.log('inserted new class student successfully');
+            res.redirect(`/class/${req.params.id}/${req.params.section}/students`);
+        }
+        else{
+            throw err;
+        }
+    });
+});
+
+app.post('/class/:id/:section/students/edit',(req,res)=>{
+
+    let sql=`UPDATE class SET attendance = ${req.body.attendance} where account_id = ${req.body.account_id}`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            console.log('updated class students successfully');
+            res.redirect(`/class/${req.params.id}/${req.params.section}/students`);
+        }
+        else{
+            throw err;
+        }
+    });
+});
+
+app.post('/class/:id/:section/students/delete',(req,res)=>{
+
+    let sql=`DELETE FROM class where account_id = ${req.body.account_id}`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            console.log('deleted class students successfully');
+            res.redirect(`/class/${req.params.id}/${req.params.section}/students`);
+        }
+        else{
+            throw err;
+        }
+    });
+});
+
 app.get("/class/:id/:section/students",(req,res)=>{
-    let sql = `SELECT account.firstname, account.lastname, account.role, class.section, class.attendance from account JOIN class ON account.id = account_id WHERE class_id ="${req.params.id}"`;
+    let sql = `SELECT account.firstname, account.lastname, account.role, class.account_id, class.section, class.attendance from account JOIN class ON account.id = account_id WHERE class_id ="${req.params.id}" AND section = "${req.params.section}"`;
     database.query(sql,(err,result)=>{
         if(!err){
             console.log(result);
@@ -800,7 +900,7 @@ app.get("/class/:id/:section/students",(req,res)=>{
 });
 
 app.get("/student/class/:id/:section/students",(req,res)=>{
-    let sql = `SELECT account.firstname, account.lastname, account.role, class.section, class.attendance from account JOIN class ON account.id = account_id WHERE class_id ="${req.params.id}"`;
+    let sql = `SELECT account.firstname, account.lastname, account.role, class.section, class.attendance from account JOIN class ON account.id = account_id WHERE class_id ="${req.params.id}" AND section = "${req.params.section}"`;
     database.query(sql,(err,result)=>{
         if(!err){
             console.log(result);
@@ -1029,6 +1129,7 @@ app.post('/class/:id/:section/:lesson_id/delete_upload_file', document.single('f
         }
     });
 });
+
 
 
 
