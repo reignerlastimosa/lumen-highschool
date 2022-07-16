@@ -95,6 +95,67 @@ nav{
    height:100%;
    background-color: #3B778A;
 }
+
+#lesson_section{
+    position:relative;
+    
+}
+
+#announcement_section{
+    position:relative;
+
+}
+
+#delete-lesson{
+    position:absolute;
+    right:2%;
+    top:10%;
+    border:none;
+    background-color: transparent;
+    color:rgba(219, 8, 8, 0.933);
+   
+}
+
+#edit-lesson{
+    position:absolute;
+    left:2%;
+    bottom:10%;
+    background-color: #3B778A;
+    color:white;
+    border:none;
+    width:80px;
+    height:35px;
+    border-radius: 5px;
+}
+
+#edit-announcement{
+    position:absolute;
+    left:2%;
+    bottom:5%;
+    background-color: #3B778A;
+    color:white;
+    border:none;
+    width:80px;
+    height:35px;
+    border-radius: 5px;
+}
+
+#edit-student{
+    border:none;
+    background-color: transparent;
+    color:#3B778A;
+    
+}
+
+#delete-student{
+    border:none;
+    background-color: transparent;
+    color:rgba(219, 8, 8, 0.933);
+    
+
+}
+
+
 nav h3{
     color:white;
     

@@ -672,16 +672,17 @@ app.get('/student/grades', (req,res)=>{
 });
 
 function getAnnouncement(req,res,next){
-    let sql = `SELECT class_id from class WHERE account_id = ${req.session.account_id}`;
+    let sql = `SELECT class_id, section from class WHERE account_id = ${req.session.account_id}`;
     database.query(sql,(err,result)=>{
         if(!err){
             
             req.session.classes = [];
+            req.session.section = [];
             for(var i = 0; i<result.length;i++){
                 
                 
                 req.session.classes.push('"'+result[i].class_id+ '"');
-
+                req.session.section.push('"'+result[i].section+ '"');
                 console.log(req.session.clasess);
             }
 
@@ -740,8 +741,8 @@ app.get('/student/announcement', getAnnouncement,(req,res)=>{
 
 app.get('/class', (req,res)=>{
     if(req.session.loggedin) {
-        let sql = `SELECT class_id, section FROM class WHERE account_id = ${ req.session.account_id}`;
-
+        let sql = `SELECT class_id, section from class WHERE account_id = ${ req.session.account_id}`;
+        
         database.query(sql,(err,result)=>{
             if(!err){
                 res.render('class', {classes:result});
@@ -760,8 +761,48 @@ app.get('/class', (req,res)=>{
 
 app.get('/student/class', (req,res)=>{
     if(req.session.loggedin) {
-        let sql = `SELECT class_id, section FROM class WHERE account_id = ${ req.session.account_id}`;
+        let sql = `SELECT class_id, section from class WHERE account_id = ${ req.session.account_id}`;
 
+        database.query(sql,(err,result)=>{
+            if(!err){
+                res.render('student_class', {classes:result});
+                console.log(result);
+    
+            }
+            else{
+                throw err;
+            }
+        }); 
+    }
+    else{
+        res.send('Please log in to view the page');
+    }
+});
+
+app.get('/class/:section', (req,res)=>{
+    if(req.session.loggedin) {
+        let sql = `SELECT class_id, section from class WHERE account_id = ${ req.session.account_id} AND section = "${req.params.section}"`;
+        
+        database.query(sql,(err,result)=>{
+            if(!err){
+                res.render('class', {classes:result});
+                console.log(result);
+    
+            }
+            else{
+                throw err;
+            }
+        }); 
+    }
+    else{
+        res.send('Please log in to view the page');
+    }
+});
+
+app.get('/student/class/:section', (req,res)=>{
+    if(req.session.loggedin) {
+        let sql = `SELECT class_id, section from class WHERE account_id = ${ req.session.account_id} AND class_id = "${req.params.id}"`;
+        
         database.query(sql,(err,result)=>{
             if(!err){
                 res.render('student_class', {classes:result});
@@ -887,7 +928,7 @@ app.post('/class/:id/:section/students/delete',(req,res)=>{
 });
 
 app.get("/class/:id/:section/students",(req,res)=>{
-    let sql = `SELECT account.firstname, account.lastname, account.role, class.account_id, class.section, class.attendance from account JOIN class ON account.id = account_id WHERE class_id ="${req.params.id}" AND section = "${req.params.section}"`;
+    let sql = `SELECT account.firstname, account.lastname, account.role, class.account_id, class.section, class.attendance from account JOIN class ON account.id = account_id WHERE class_id ="${req.params.id}" AND section = "${req.params.section}" AND role = "student"`;
     database.query(sql,(err,result)=>{
         if(!err){
             console.log(result);
@@ -916,7 +957,7 @@ app.get("/student/class/:id/:section/students",(req,res)=>{
 
 app.get('/schedule',getAnnouncement, (req,res)=>{
     if(req.session.loggedin) {
-        let sql = `SELECT * FROM schedule WHERE class_id IN (${req.session.classes})`;
+        let sql = `SELECT * FROM schedule WHERE class_id IN (${req.session.classes}) AND section IN (${req.session.section})`;
         database.query(sql,(err,result)=>{
             if(!err){
                 console.log(result);
@@ -935,7 +976,7 @@ app.get('/schedule',getAnnouncement, (req,res)=>{
 
 app.get('/student/schedule',getAnnouncement, (req,res)=>{
     if(req.session.loggedin) {
-        let sql = `SELECT * FROM schedule WHERE class_id IN (${req.session.classes})`;
+        let sql = `SELECT * FROM schedule WHERE class_id IN (${req.session.classes}) AND section IN (${req.session.section})`;
         database.query(sql,(err,result)=>{
             if(!err){
                 console.log(result);

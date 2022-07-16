@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `lumen` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `lumen`;
 -- MySQL dump 10.13  Distrib 8.0.29, for Win64 (x86_64)
 --
 -- Host: localhost    Database: lumen
@@ -32,7 +34,7 @@ CREATE TABLE `account` (
   `image` varchar(100) DEFAULT NULL,
   `role` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +43,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,'reignerlastimosa@gmail.com','123','Robert','Lastimosa','2000-09-26','1657453258314_andrei1.jpg','admin'),(2,'ellahchua@gmail.com','123','Ellah','Chua','2000-06-24',NULL,'student'),(3,'catherinebautista@gmail.com','123','Catherine','Bautista','2000-03-12',NULL,'student'),(6,'karlsolmiano@gmail.com','123','Karl','Solmiano','2000-06-18',NULL,'student'),(7,'jeromevelasquez@gmail.com','123','Jerome','Velasquez','2001-02-06',NULL,'student'),(8,'justinecerezo@gmail.com','123','Justin','Cerezo','2001-08-12',NULL,'student'),(9,'arthtibay@gmail.com','123','Arth','Tibay','2001-10-21',NULL,'student'),(10,'albertmaglines@gmail.com','123','Albert','Maglines','2002-06-23',NULL,'student'),(11,'stephaniechua@gmail.com','123','Stephanie','Chua','2001-02-14',NULL,'student');
+INSERT INTO `account` VALUES (1,'reignerlastimosa@gmail.com','123','Robert','Lastimosa','2000-09-26','1657807934275_reigner.jpg','admin'),(2,'ellahchua@gmail.com','123','Ellah','Chua','2000-06-24',NULL,'student'),(3,'catherinebautista@gmail.com','123','Catherine','Bautista','2000-03-12',NULL,'student'),(6,'karlsolmiano@gmail.com','123','Karl','Solmiano','2000-06-18',NULL,'student'),(7,'jeromevelasquez@gmail.com','123','Jerome','Velasquez','2001-02-06',NULL,'student'),(8,'justinecerezo@gmail.com','123','Justin','Cerezo','2001-08-12',NULL,'student'),(9,'arthtibay@gmail.com','123','Arth','Tibay','2001-10-21',NULL,'student'),(10,'albertmaglines@gmail.com','123','Albert','Maglines','2002-06-23',NULL,'student'),(11,'stephaniechua@gmail.com','123','Stephanie','Chua','2001-02-14',NULL,'student'),(12,'dansoriano@gmail.com','123','Dan','Soriano',NULL,NULL,'student'),(13,'richardking@gmail.com','123','Richard','King',NULL,NULL,'student'),(14,'adrianbaltazar@gmail.com','123','Adrian','Baltazar',NULL,NULL,'student'),(15,'jamesworthy@gmail.com','123','James','Worthy',NULL,NULL,'student'),(16,'maxpayne@gmail.com','123','Max','Payne',NULL,NULL,'student'),(17,'bryansantos@gmail.com','123','Bryan','Santos',NULL,NULL,'student'),(18,'viannasoriano@gmail.com','123','Vianna','Soriano',NULL,NULL,NULL),(19,'robinvelasquez@gmail.com','123','Robin','Velasquez',NULL,NULL,NULL),(20,'paolomaglines@gmail.com','123','Paolo','Maglines',NULL,NULL,NULL),(21,'berniececerezo@gmail.com','123','Berniece','Cerezo',NULL,NULL,NULL),(22,'sophiatibay@gmail.com','123','Sophia','Tibay',NULL,NULL,NULL),(23,'karlvelasquez@gmail.com','123','Karl','Velasquez',NULL,NULL,NULL),(24,'ralphsoriano@gmail.com','123','Ralph','Soriano',NULL,NULL,NULL),(25,'camillesolmiano@gmail.com','123','Camille','Solmiano',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,7 +62,7 @@ CREATE TABLE `announcement` (
   `announcement_date` date DEFAULT NULL,
   `section` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`announcement_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +71,7 @@ CREATE TABLE `announcement` (
 
 LOCK TABLES `announcement` WRITE;
 /*!40000 ALTER TABLE `announcement` DISABLE KEYS */;
-INSERT INTO `announcement` VALUES (1,'STATS101','LONG QUIZ 1','Prepare for Long quiz 2. Coverage will be from Lesson 1: Basic Statistic to Lesson 2: Measure of Central Tendency','2022-06-29','3ISA'),(2,'STATS101','HOMEWORK #1','Please answer your homework #1 at page 34.','2022-06-29','3ISA');
+INSERT INTO `announcement` VALUES (1,'STATS101','LONG QUIZ 1','Prepare for Long quiz 2. Coverage will be from Lesson 1: Basic Statistic to Lesson 2: Measure of Central Tendency','2022-06-29','3ISA'),(2,'STATS101','HOMEWORK #2','Please answer your homework #1 at page 32.','2022-07-15','3ISA');
 /*!40000 ALTER TABLE `announcement` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +99,7 @@ CREATE TABLE `class` (
 
 LOCK TABLES `class` WRITE;
 /*!40000 ALTER TABLE `class` DISABLE KEYS */;
-INSERT INTO `class` VALUES ('ENGLISH101',2,'3ISA',90,88),('MATH101',2,'3ISA',85,90),('STATS101',2,'3ISA',89,91),('SCIENCE101',2,'3ISA',92,93),('ENGLISH101',3,'3ISA',90,91),('MATH101',3,'3ISA',91,92),('STATS101',3,'3ISA',89,90),('ENGLISH101',6,'3ISA',90,85),('MATH101',6,'3ISA',86,89),('STATS101',6,'3ISA',87,86),('SCIENCE101',6,'3ISA',90,91),('ENGLISH101',7,'3ISA',90,91),('MATH101',7,'3ISA',86,90),('STATS101',7,'3ISA',88,92),('SCIENCE101',7,'3ISA',90,91),('ENGLISH101',8,'3ISC',94,100),('MATH101',8,'3ISC',89,92),('STATS101',8,'3ISC',90,95),('SCIENCE101',8,'3ISC',95,98),('ENGLISH101',9,'3ISB',92,96),('MATH101',9,'3ISB',85,88),('STATS101',9,'3ISB',87,90),('SCIENCE101',9,'3ISB',93,96),('ENGLISH101',10,'3ISB',90,97),('MATH101',10,'3ISB',88,95),('STATS101',10,'3ISB',86,92),('SCIENCE101',10,'3ISB',91,98),('ENGLISH101',11,'3ISC',95,100),('MATH101',11,'3ISC',84,92),('STATS101',11,'3ISC',88,95),('SCIENCE101',11,'3ISC',96,100),('STATS101',1,'3ISA',NULL,NULL),('STATS101',1,'3ISB',NULL,NULL),('STATS101',1,'3ISC',NULL,NULL),('ENGLISH101',1,'3ISA',NULL,NULL);
+INSERT INTO `class` VALUES ('ENGLISH101',2,'3ISA',90,92),('MATH101',2,'3ISA',85,92),('STATS101',2,'3ISA',89,92),('ENGLISH101',3,'3ISA',90,91),('MATH101',3,'3ISA',91,92),('STATS101',3,'3ISA',89,90),('ENGLISH101',6,'3ISA',90,85),('MATH101',6,'3ISA',86,89),('STATS101',6,'3ISA',87,86),('ENGLISH101',8,'3ISC',94,100),('MATH101',8,'3ISC',89,92),('STATS101',8,'3ISC',90,95),('ENGLISH101',9,'3ISB',92,96),('MATH101',9,'3ISB',85,88),('STATS101',9,'3ISB',87,90),('ENGLISH101',10,'3ISB',90,97),('MATH101',10,'3ISB',88,95),('STATS101',10,'3ISB',86,92),('ENGLISH101',11,'3ISC',95,100),('MATH101',11,'3ISC',84,92),('STATS101',11,'3ISC',88,95),('STATS101',1,'3ISA',NULL,NULL),('STATS101',1,'3ISB',NULL,NULL),('STATS101',1,'3ISC',NULL,NULL),('ENGLISH101',1,'3ISA',NULL,NULL),('STATS101',7,'3ISA',NULL,89),('STATS101',12,'3ISA',NULL,NULL),('MATH101',12,'3ISA',NULL,NULL),('ENGLISH101',12,'3ISA',NULL,NULL),('STATS101',13,'3ISA',NULL,NULL),('MATH101',13,'3ISA',NULL,NULL),('ENGLISH101',13,'3ISA',NULL,NULL),('STATS101',14,'3ISA',NULL,NULL),('MATH101',14,'3ISA',NULL,NULL),('ENGLISH101',14,'3ISA',NULL,NULL),('STATS101',15,'3ISA',NULL,NULL),('MATH101',15,'3ISA',NULL,NULL),('ENGLISH101',15,'3ISA',NULL,NULL),('STATS101',16,'3ISA',NULL,NULL),('MATH101',16,'3ISA',NULL,NULL),('ENGLISH101',16,'3ISA',NULL,NULL),('STATS101',17,'3ISA',NULL,NULL),('MATH101',17,'3ISA',NULL,NULL),('ENGLISH101',17,'3ISA',NULL,NULL),('STATS101',18,'3ISB',NULL,NULL),('MATH101',18,'3ISB',NULL,NULL),('ENGLISH101',18,'3ISB',NULL,NULL),('STATS101',19,'3ISB',NULL,NULL),('MATH101',19,'3ISB',NULL,NULL),('ENGLISH101',19,'3ISB',NULL,NULL),('STATS101',20,'3ISB',NULL,NULL),('MATH101',20,'3ISB',NULL,NULL),('ENGLISH101',20,'3ISB',NULL,NULL),('STATS101',21,'3ISB',NULL,NULL),('MATH101',21,'3ISB',NULL,NULL),('ENGLISH101',21,'3ISB',NULL,NULL),('STATS101',22,'3ISC',NULL,NULL),('MATH101',22,'3ISC',NULL,NULL),('ENGLISH101',22,'3ISC',NULL,NULL),('STATS101',23,'3ISC',NULL,NULL),('MATH101',23,'3ISC',NULL,NULL),('ENGLISH101',23,'3ISC',NULL,NULL),('STATS101',24,'3ISC',NULL,NULL),('MATH101',24,'3ISC',NULL,NULL),('ENGLISH101',24,'3ISC',NULL,NULL),('STATS101',25,'3ISC',NULL,NULL),('MATH101',25,'3ISC',NULL,NULL),('ENGLISH101',25,'3ISC',NULL,NULL);
 /*!40000 ALTER TABLE `class` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -173,7 +175,7 @@ CREATE TABLE `lesson` (
   `lesson_description` varchar(50) DEFAULT NULL,
   `section` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`lesson_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,7 +184,7 @@ CREATE TABLE `lesson` (
 
 LOCK TABLES `lesson` WRITE;
 /*!40000 ALTER TABLE `lesson` DISABLE KEYS */;
-INSERT INTO `lesson` VALUES (1,'STATS101','INTORDUCTION TO STATISTICS','Understanding the basics of Statistics','3ISA'),(2,'STATS101','MEASURE OF CENTRAL TENDENCY','Recalling Mean, median and mode','3ISA');
+INSERT INTO `lesson` VALUES (1,'STATS101','INTRODUCTION TO STATISTICS','Basics of statistics','3ISA'),(2,'STATS101','MEASURE OF CENTRAL TENDENCY','Recalling mean, median, and mode','3ISA');
 /*!40000 ALTER TABLE `lesson` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,7 +202,7 @@ CREATE TABLE `schedule` (
   `schedule_name` varchar(50) DEFAULT NULL,
   `schedule_date` date DEFAULT NULL,
   PRIMARY KEY (`schedule_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,7 +211,7 @@ CREATE TABLE `schedule` (
 
 LOCK TABLES `schedule` WRITE;
 /*!40000 ALTER TABLE `schedule` DISABLE KEYS */;
-INSERT INTO `schedule` VALUES (1,'MATH101','3ISC','LONG TEST 2','2022-07-05'),(2,'STATS101','3ISA','LONG TEST 1','2022-07-12'),(3,'ENGLISH101','3ISB','Homework 1','2022-07-11'),(6,'ENGLISH101','3ISC','Pecha Kucha','2022-07-14');
+INSERT INTO `schedule` VALUES (1,'MATH101','3ISC','LONG TEST 2','2022-07-05'),(2,'STATS101','3ISA','LONG TEST 1','2022-07-12'),(3,'ENGLISH101','3ISB','Homework 1','2022-07-11'),(6,'ENGLISH101','3ISC','Pecha Kucha','2022-07-14'),(7,'STATS101','3ISA','Homework 1','2022-07-17'),(8,'STATS101','3ISB','Homework 1','2022-07-17'),(9,'STATS101','3ISB','Long Test 1','2022-07-18');
 /*!40000 ALTER TABLE `schedule` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -222,4 +224,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-13  8:19:21
+-- Dump completed on 2022-07-16  8:05:13

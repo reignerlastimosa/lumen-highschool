@@ -61,7 +61,7 @@
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                 
-                                <input type="submit" name ="grades_edit" class="btn btn-secondary" value="Ok"> 
+                                <input type="submit" name ="grades_edit" class="btn btn-secondary" value="Create"> 
                               </div>
                             </form>
                         </div>
@@ -72,13 +72,16 @@
             </div>
 
             <% lessons.forEach((les)=> { %>
-            <section class="m-3"> <a href="/class/<%=les.class_id%>/<%=les.section%>/<%=les.lesson_id%>">
+            <section id ="lesson_section" class="m-3"> <a href="/class/<%=les.class_id%>/<%=les.section%>/<%=les.lesson_id%>">
                 <h2 class="m-4"><%=les.lesson_name%></h2>
                 <p class="m-4"><%=les.lesson_description%></p>
             </a>
             
-            <button data-bs-toggle = "modal" data-bs-target="#edit_lesson<%=les.lesson_id%>">Edit</button>
-            <button data-bs-toggle = "modal" data-bs-target="#delete_lesson<%=les.lesson_id%>">Delete</button>
+            <button id = "edit-lesson" data-bs-toggle = "modal" data-bs-target="#edit_lesson<%=les.lesson_id%>">Edit</button>
+            <button id="delete-lesson" data-bs-toggle = "modal" data-bs-target="#delete_lesson<%=les.lesson_id%>"><svg xmlns="http://www.w3.org/2000/svg" width="35" height="30" fill="currentColor" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+              <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
+            </svg>
+            </svg></button>
 
             <div class="modal fade" id="edit_lesson<%=les.lesson_id%>">
                 <div class="modal-dialog">
@@ -107,7 +110,7 @@
                           <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                             
-                            <input type="submit" name ="grades_edit" class="btn btn-secondary" value="Ok"> 
+                            <input type="submit" name ="grades_edit" class="btn btn-secondary" value="Edit"> 
                           </div>
                         </form>
                     </div>
@@ -136,7 +139,7 @@
                           <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                             
-                            <input type="submit" name ="grades_edit" class="btn btn-secondary" value="Ok"> 
+                            <input type="submit" name ="grades_edit" class="btn btn-secondary" value="Delete"> 
                           </div>
                         </form>
                     </div>

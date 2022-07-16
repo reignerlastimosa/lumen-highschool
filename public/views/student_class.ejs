@@ -56,13 +56,16 @@
 
         <div id="classes_function">   
             <label for=""> Filter</label>
-        <select  name="filter_class" id="filter_class">
-           
-            <option value="class1">Class 1</option>
-            <option value="class2">Class 2</option>
-            <option value="class3">Class 3</option>
-            <option value="class4">Class 4</option>
-          </select>
+            <select  name="filter_class" id="filter_class" onchange="location = '/student/class' + this.options[this.selectedIndex].value; ">
+               
+              <option hidden>Select Class</option>
+              
+               
+              <option value="STATS101">STATS101</option>
+              <option value="MATH101">MATH101</option>
+              <option value="ENGLISH101">ENGLISH101</option>
+              
+            </select>
         </div>
         
 
@@ -76,11 +79,11 @@
 
       <% classes.forEach((c) => {
         %>
-        <section class="m-5"> <a href="/student/class/<%=c.class_id%>/<%=c.section%>">
+        <section class="m-5 d-flex justify-content-center align-items-center"> <a href="/student/class/<%=c.class_id%>/<%=c.section%>">
           
-            <h3 class ="m-4" id="class_name"><%= c.class_id %></h3>
+            <h3 id="class_name"><%= c.class_id %></h3>
             
-            <h5 class="m-4"> Section: <%=c.section %></h5>
+            <h5 > Section: <%=c.section %></h5>
             
           </a>
         </section>
