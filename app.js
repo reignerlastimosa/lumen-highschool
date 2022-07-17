@@ -353,7 +353,7 @@ app.post('/login', (req,res)=>{
                     res.redirect('/index');
                 }
                 else{
-                    res.redirect('/student/profile');
+                    res.redirect('/student_index');
                 }
                 
             }
@@ -384,7 +384,7 @@ app.post('/upload_image', upload.single('image'),(req,res)=>{
     });
 });
 
-app.post('/student/upload_image', upload.single('image'),(req,res)=>{
+app.post('/upload_image_student', upload.single('image'),(req,res)=>{
     console.log(req.file);
     
     let sql = `UPDATE account SET image = "${req.file.filename}" WHERE id=${req.session.account_id}`;
@@ -402,7 +402,7 @@ app.post('/student/upload_image', upload.single('image'),(req,res)=>{
 
 app.get('/grades/:class',(req,res)=>{
 
-    database.query(`SELECT account.firstname, account.lastname, account.role, grades.class_id, grades.section, grades.activity_name, grades.activity_grade from account JOIN grades ON account.id = grades.account_id WHERE class_id = ?`,req.params.class,(err,result)=>{
+    database.query(`SELECT account.firstname, account.lastname, account.role, grades.class_id, grades.section, grades.activity_name, grades.activity_grade from account JOIN grades ON account.id = grades.account_id  WHERE class_id = ? ORDER BY lastname`,req.params.class,(err,result)=>{
       if(!err){
           console.log("filtered schedule by section");
           res.render('grades', {students:result});
@@ -416,7 +416,7 @@ app.get('/grades/:class',(req,res)=>{
 
   app.get('/student/grades/:class',(req,res)=>{
 
-    database.query(`SELECT account.firstname, account.lastname, account.role, grades.class_id, grades.section, grades.activity_name, grades.activity_grade from account JOIN grades ON account.id = grades.account_id WHERE class_id = ? AND account_id = ?`,[req.params.class, req.session.account_id],(err,result)=>{
+    database.query(`SELECT account.firstname, account.lastname, account.role, grades.class_id, grades.section, grades.activity_name, grades.activity_grade from account JOIN grades ON account.id = grades.account_id  WHERE class_id = ? AND account_id = ? ORDER BY lastname`,[req.params.class, req.session.account_id],(err,result)=>{
       if(!err){
           console.log("filtered schedule by section");
           res.render('student_grades', {students:result});
@@ -550,7 +550,7 @@ app.post('/student/edit_account',(req,res)=>{
     database.query(sql,(err,result)=>{
         if(!err){
             console.log("successfully updated account table");
-            res.redirect("/student/profile");
+            res.redirect("/student_index");
         }
         else{
             throw err;
@@ -599,7 +599,7 @@ app.get('/index', (req,res)=>{
     
 });
 
-app.get('/student/profile', (req,res)=>{
+app.get('/student_index', (req,res)=>{
 
     if(req.session.loggedin) {
 
@@ -632,7 +632,7 @@ app.get('/student/profile', (req,res)=>{
 
 app.get('/grades', (req,res)=>{
     if(req.session.loggedin) {
-        let sql = "SELECT account.firstname, account.lastname, account.role, grades.activity_id,grades.class_id, grades.section, grades.activity_name, grades.activity_grade from account JOIN grades ON account.id = grades.account_id";
+        let sql = "SELECT account.firstname, account.lastname, account.role, grades.activity_id,grades.class_id, grades.section, grades.activity_name, grades.activity_grade from account JOIN grades ON account.id = grades.account_id ORDER BY lastname";
 
         database.query(sql,(err,result)=>{
             if(!err){
@@ -653,7 +653,7 @@ app.get('/grades', (req,res)=>{
 
 app.get('/student/grades', (req,res)=>{
     if(req.session.loggedin) {
-        let sql = `SELECT account.firstname, account.lastname, account.role, grades.class_id, grades.section, grades.activity_name, grades.activity_grade from account JOIN grades ON account.id = ${req.session.account_id}`;
+        let sql = `SELECT  account.role, grades.class_id, grades.activity_name, grades.activity_grade from account JOIN grades ON account.id = ${req.session.account_id} WHERE account_id = ${req.session.account_id}`;
 
         database.query(sql,(err,result)=>{
             if(!err){
@@ -696,7 +696,7 @@ function getAnnouncement(req,res,next){
 
 app.get('/announcement', getAnnouncement,(req,res)=>{
     if(req.session.loggedin) {
-        let sql = `SELECT * from announcement where class_id IN (${req.session.classes})`;
+        let sql = `SELECT * from announcement where class_id IN (${req.session.classes}) and section IN (${req.session.section})`;
         database.query(sql,(err,result)=>{
             if(!err){
                 console.log(result);
@@ -717,7 +717,7 @@ app.get('/announcement', getAnnouncement,(req,res)=>{
 
 app.get('/student/announcement', getAnnouncement,(req,res)=>{
     if(req.session.loggedin) {
-        let sql = `SELECT * from announcement where class_id IN (${req.session.classes})`;
+        let sql = `SELECT * from announcement where class_id IN (${req.session.classes}) and section IN (${req.session.section})`;
         database.query(sql,(err,result)=>{
             if(!err){
                 console.log(result);
@@ -799,7 +799,7 @@ app.get('/class/:section', (req,res)=>{
     }
 });
 
-app.get('/student/class/:section', (req,res)=>{
+app.get('/student/class/:id', (req,res)=>{
     if(req.session.loggedin) {
         let sql = `SELECT class_id, section from class WHERE account_id = ${ req.session.account_id} AND class_id = "${req.params.id}"`;
         
@@ -928,7 +928,7 @@ app.post('/class/:id/:section/students/delete',(req,res)=>{
 });
 
 app.get("/class/:id/:section/students",(req,res)=>{
-    let sql = `SELECT account.firstname, account.lastname, account.role, class.account_id, class.section, class.attendance from account JOIN class ON account.id = account_id WHERE class_id ="${req.params.id}" AND section = "${req.params.section}" AND role = "student"`;
+    let sql = `SELECT account.firstname, account.lastname, account.role, class.account_id, class.section, class.attendance from account JOIN class ON account.id = account_id WHERE class_id ="${req.params.id}" AND section = "${req.params.section}" AND role = "student" ORDER BY lastname`;
     database.query(sql,(err,result)=>{
         if(!err){
             console.log(result);
@@ -941,7 +941,7 @@ app.get("/class/:id/:section/students",(req,res)=>{
 });
 
 app.get("/student/class/:id/:section/students",(req,res)=>{
-    let sql = `SELECT account.firstname, account.lastname, account.role, class.section, class.attendance from account JOIN class ON account.id = account_id WHERE class_id ="${req.params.id}" AND section = "${req.params.section}"`;
+    let sql = `SELECT account.firstname, account.lastname, account.role, class.section, class.attendance from account JOIN class ON account.id = account_id WHERE class_id ="${req.params.id}" AND section = "${req.params.section}" ORDER BY lastname`;
     database.query(sql,(err,result)=>{
         if(!err){
             console.log(result);
@@ -1005,6 +1005,25 @@ app.post('/add_schedule',(req,res)=>{
     database.query(sql,(err,result)=>{
         if(!err){
             console.log("inserted new schedule");
+            res.redirect("schedule");
+        }
+        else{
+            throw err;
+        }
+    });
+});
+
+app.post('/edit_schedule',(req,res)=>{
+    let hidden = req.body.hidden;
+    let class_id = req.body.class;
+    let section = req.body.section;
+    let schedule_name = req.body.schedule_name;
+    let schedule_date = req.body.schedule_date;
+    let sql = `UPDATE schedule SET class_id = "${class_id}", section = "${section}", schedule_name ="${schedule_name}", schedule_date="${schedule_date}" WHERE schedule_id = ${hidden}`;
+
+    database.query(sql,(err,result)=>{
+        if(!err){
+            console.log("updated  schedule");
             res.redirect("schedule");
         }
         else{
@@ -1108,6 +1127,24 @@ app.get('/class/:id/:section/:lesson_id/:filename',(req,res)=>{
         if(!err){
             
            res.render('fileview', {title:req.params.id,section:req.params.section, files:result[0].filename});
+        }
+        else{
+            throw err;
+        }
+        
+    });
+});
+
+app.get('/student/class/:id/:section/:lesson_id/:filename',(req,res)=>{  
+
+    
+
+    
+    let sql = `SELECT * FROM file WHERE filename = "${req.params.filename}"`;
+    database.query(sql,(err,result)=>{
+        if(!err){
+            
+           res.render('student_fileview', {title:req.params.id,section:req.params.section, files:result[0].filename});
         }
         else{
             throw err;

@@ -54,7 +54,7 @@
 
         <%announcements.forEach((announcement)=> { %>
         <section class="m-5">
-            <h2><%= announcement.class_id%></h2>
+            <h2><%= announcement.class_id%> - <%=announcement.section%></h2>
             <h5><%= announcement.announcement_title%></h5>
             <p> <%= announcement.announcement_date%></p>
             <p> <%= announcement.announcement_body%></p>
